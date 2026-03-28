@@ -251,14 +251,25 @@ export default function DashboardLayout({
           <div className="flex items-center gap-4">
             <ThemeToggle />
             <div className="h-6 w-px bg-border/50 hidden sm:block"></div>
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:flex flex-col items-end">
-                <p className="text-sm font-semibold text-foreground leading-none">{user?.username}</p>
-                <p className="text-[10px] text-muted-foreground">{user?.email}</p>
-              </div>
-              <button onClick={handleLogout} title="Sign Out" className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-400 flex items-center justify-center text-black font-bold ring-2 ring-background shadow-sm hover:opacity-90 transition-opacity">
+            <div className="relative group">
+              <button className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-400 flex items-center justify-center text-black font-bold ring-2 ring-background shadow-sm hover:opacity-90 transition-opacity">
                 {user?.username?.charAt(0).toUpperCase()}
               </button>
+              {/* Dropdown */}
+              <div className="absolute right-0 top-11 w-52 rounded-xl border border-border/50 bg-card/95 backdrop-blur-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="px-4 py-3 border-b border-border/50">
+                  <p className="text-sm font-semibold text-foreground truncate">{user?.username}</p>
+                  <p className="text-xs text-muted-foreground truncate mt-0.5">{user?.email}</p>
+                </div>
+                <div className="p-1.5">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-red-500 hover:bg-red-500/10 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" /> Sign Out
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </header>
