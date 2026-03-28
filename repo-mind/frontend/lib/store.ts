@@ -1,6 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { api, User, RepoSession, ReadmeContent } from "./api";
+import {
+  api,
+  User,
+  RepoSession,
+  ReadmeContent,
+  GeneratedContent,
+  DocumentationContent,
+  DocumentationType,
+  ContributorInsightsReport,
+} from "./api";
 
 interface AuthState {
   user: User | null;
@@ -24,14 +33,12 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isLoading: false,
       hasHydrated: false,
-      
+
       setHasHydrated: (value) => set({ hasHydrated: value }),
 
       initializeToken: () => {
         const { token } = get();
-        if (token) {
-          api.setToken(token);
-        }
+        if (token) api.setToken(token);
       },
 
       login: async (email, password) => {
@@ -39,12 +46,7 @@ export const useAuthStore = create<AuthState>()(
         try {
           const response = await api.login(email, password);
           api.setToken(response.access_token);
-          set({ 
-            token: response.access_token,
-            user: response.user, 
-            isAuthenticated: true, 
-            isLoading: false 
-          });
+          set({ token: response.access_token, user: response.user, isAuthenticated: true, isLoading: false });
         } catch (error) {
           set({ isLoading: false });
           throw error;
@@ -56,12 +58,7 @@ export const useAuthStore = create<AuthState>()(
         try {
           const response = await api.register(email, username, password);
           api.setToken(response.access_token);
-          set({ 
-            token: response.access_token,
-            user: response.user, 
-            isAuthenticated: true, 
-            isLoading: false 
-          });
+          set({ token: response.access_token, user: response.user, isAuthenticated: true, isLoading: false });
         } catch (error) {
           set({ isLoading: false });
           throw error;
@@ -75,14 +72,8 @@ export const useAuthStore = create<AuthState>()(
 
       checkAuth: async () => {
         const { token } = get();
-        if (!token) {
-          set({ isLoading: false, isAuthenticated: false });
-          return;
-        }
-        
-        // Make sure the API client has the token
+        if (!token) { set({ isLoading: false, isAuthenticated: false }); return; }
         api.setToken(token);
-        
         set({ isLoading: true });
         try {
           const user = await api.getCurrentUser();
@@ -95,17 +86,9 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage",
-      partialize: (state) => ({ 
-        user: state.user, 
-        token: state.token,
-        isAuthenticated: state.isAuthenticated 
-      }),
+      partialize: (state) => ({ user: state.user, token: state.token, isAuthenticated: state.isAuthenticated }),
       onRehydrateStorage: () => (state) => {
-        // Initialize API client token when store rehydrates
-        if (state?.token) {
-          api.setToken(state.token);
-        }
-        // Mark hydration as complete
+        if (state?.token) api.setToken(state.token);
         state?.setHasHydrated(true);
       },
     }
@@ -126,7 +109,7 @@ interface RepoState {
 
 export const useRepoStore = create<RepoState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       currentSession: null,
       sessions: [],
       isAnalyzing: false,
@@ -138,11 +121,7 @@ export const useRepoStore = create<RepoState>()(
         set({ isAnalyzing: true });
         try {
           const session = await api.analyzeRepo(url);
-          set((state) => ({
-            currentSession: session,
-            sessions: [session, ...state.sessions],
-            isAnalyzing: false,
-          }));
+          set((state) => ({ currentSession: session, sessions: [session, ...state.sessions], isAnalyzing: false }));
           return session;
         } catch (error) {
           set({ isAnalyzing: false });
@@ -155,9 +134,7 @@ export const useRepoStore = create<RepoState>()(
         set({ sessions });
       },
 
-      setCurrentSession: (session) => {
-        set({ currentSession: session });
-      },
+      setCurrentSession: (session) => set({ currentSession: session }),
 
       deleteSession: async (id) => {
         await api.deleteRepoSession(id);
@@ -169,16 +146,13 @@ export const useRepoStore = create<RepoState>()(
     }),
     {
       name: "repo-storage",
-      partialize: (state) => ({
-        currentSession: state.currentSession,
-      }),
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
-      },
+      partialize: (state) => ({ currentSession: state.currentSession }),
+      onRehydrateStorage: () => (state) => { state?.setHasHydrated(true); },
     }
   )
 );
 
+// README store
 interface ReadmeState {
   currentReadme: ReadmeContent | null;
   versions: ReadmeContent[];
@@ -198,11 +172,7 @@ export const useReadmeStore = create<ReadmeState>()((set) => ({
     set({ isGenerating: true });
     try {
       const readme = await api.generateReadme(sessionId, customInstructions);
-      set((state) => ({
-        currentReadme: readme,
-        versions: [readme, ...state.versions],
-        isGenerating: false,
-      }));
+      set((state) => ({ currentReadme: readme, versions: [readme, ...state.versions], isGenerating: false }));
       return readme;
     } catch (error) {
       set({ isGenerating: false });
@@ -215,17 +185,129 @@ export const useReadmeStore = create<ReadmeState>()((set) => ({
     set({ versions, currentReadme: versions[0] || null });
   },
 
-  setCurrentReadme: (readme) => {
-    set({ currentReadme: readme });
-  },
+  setCurrentReadme: (readme) => set({ currentReadme: readme }),
 
   updateReadme: async (readmeId, content) => {
     const updated = await api.updateReadme(readmeId, content);
-    set((state) => ({
-      currentReadme: updated,
-      versions: [updated, ...state.versions],
-    }));
+    set((state) => ({ currentReadme: updated, versions: [updated, ...state.versions] }));
     return updated;
   },
 }));
 
+// Documentation store
+interface DocumentationState {
+  currentDoc: DocumentationContent | null;
+  versions: DocumentationContent[];
+  isGenerating: boolean;
+  docType: DocumentationType;
+  setDocType: (type: DocumentationType) => void;
+  generateDoc: (sessionId: number, docType: DocumentationType, includeVisuals?: boolean, customInstructions?: string) => Promise<DocumentationContent>;
+  fetchVersions: (sessionId: number, docType: DocumentationType) => Promise<void>;
+  setCurrentDoc: (doc: DocumentationContent | null) => void;
+  updateDoc: (docId: number, content: string) => Promise<DocumentationContent>;
+}
+
+export const useDocumentationStore = create<DocumentationState>()((set) => ({
+  currentDoc: null,
+  versions: [],
+  isGenerating: false,
+  docType: "project_summary",
+
+  setDocType: (type) => set({ docType: type }),
+
+  generateDoc: async (sessionId, docType, includeVisuals, customInstructions) => {
+    set({ isGenerating: true });
+    try {
+      const doc = await api.generateDocumentation({
+        repo_session_id: sessionId,
+        document_type: docType,
+        include_visuals: includeVisuals,
+        custom_instructions: customInstructions,
+      });
+      set((state) => ({ currentDoc: doc, versions: [doc, ...state.versions], isGenerating: false }));
+      return doc;
+    } catch (error) {
+      set({ isGenerating: false });
+      throw error;
+    }
+  },
+
+  fetchVersions: async (sessionId, docType) => {
+    const { versions } = await api.getDocumentationVersions(sessionId, docType);
+    set({ versions, currentDoc: versions[0] || null });
+  },
+
+  setCurrentDoc: (doc) => set({ currentDoc: doc }),
+
+  updateDoc: async (docId, content) => {
+    const updated = await api.updateDocumentation(docId, content);
+    set((state) => ({ currentDoc: updated, versions: [updated, ...state.versions] }));
+    return updated;
+  },
+}));
+
+// Insights store
+interface InsightsState {
+  currentInsight: ContributorInsightsReport | null;
+  versions: ContributorInsightsReport[];
+  isGenerating: boolean;
+  generateInsights: (sessionId: number, monthsBack?: number, customInstructions?: string) => Promise<ContributorInsightsReport>;
+  fetchVersions: (sessionId: number) => Promise<void>;
+  setCurrentInsight: (insight: ContributorInsightsReport | null) => void;
+  updateInsight: (insightId: number, content: string) => Promise<ContributorInsightsReport>;
+}
+
+export const useInsightsStore = create<InsightsState>()((set) => ({
+  currentInsight: null,
+  versions: [],
+  isGenerating: false,
+
+  generateInsights: async (sessionId, monthsBack, customInstructions) => {
+    set({ isGenerating: true });
+    try {
+      const insight = await api.generateInsights({
+        repo_session_id: sessionId,
+        months_back: monthsBack,
+        custom_instructions: customInstructions,
+      });
+      set((state) => ({ currentInsight: insight, versions: [insight, ...state.versions], isGenerating: false }));
+      return insight;
+    } catch (error) {
+      set({ isGenerating: false });
+      throw error;
+    }
+  },
+
+  fetchVersions: async (sessionId) => {
+    const { versions } = await api.getInsightsVersions(sessionId);
+    set({ versions, currentInsight: versions[0] || null });
+  },
+
+  setCurrentInsight: (insight) => set({ currentInsight: insight }),
+
+  updateInsight: async (insightId, content) => {
+    const updated = await api.updateInsights(insightId, content);
+    set((state) => ({ currentInsight: updated, versions: [updated, ...state.versions] }));
+    return updated;
+  },
+}));
+
+export type DashboardModule = "readme" | "documentation" | "insights";
+
+interface UIState {
+  activeModule: DashboardModule;
+  setActiveModule: (module: DashboardModule) => void;
+  history: { readme: GeneratedContent[]; docs: GeneratedContent[]; insights: GeneratedContent[] };
+  setHistory: (history: UIState["history"]) => void;
+  historyTriggerItem: GeneratedContent | null;
+  setHistoryTriggerItem: (item: GeneratedContent | null) => void;
+}
+
+export const useUIStore = create<UIState>((set) => ({
+  activeModule: "readme",
+  setActiveModule: (module) => set({ activeModule: module }),
+  history: { readme: [], docs: [], insights: [] },
+  setHistory: (history) => set({ history }),
+  historyTriggerItem: null,
+  setHistoryTriggerItem: (item) => set({ historyTriggerItem: item }),
+}));
