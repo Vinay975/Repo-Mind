@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,185 +6,136 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 20% 97%;
+    --foreground: 224 71% 4%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 224 71% 4%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 230 84% 54%;
+    --popover-foreground: 224 71% 4%;
+    --primary: 258 90% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 214.3 31.8% 91.4%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 230 84% 54%;
+    --secondary: 220 14% 93%;
+    --secondary-foreground: 224 71% 4%;
+    --muted: 220 14% 93%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 258 90% 96%;
+    --accent-foreground: 258 90% 40%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 258 90% 60%;
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 13%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 13%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 230 84% 64%;
+    /* Deep rich dark — NOT flat black */
+    --background: 232 28% 8%;
+    --foreground: 210 30% 94%;
+
+    /* Cards clearly elevated above background */
+    --card: 232 24% 12%;
+    --card-foreground: 210 30% 94%;
+
+    --popover: 232 24% 13%;
+    --popover-foreground: 210 30% 94%;
+
+    /* Bright violet primary for dark */
+    --primary: 258 80% 70%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 230 84% 64%;
+
+    /* Secondary clearly distinct from card */
+    --secondary: 232 20% 18%;
+    --secondary-foreground: 210 30% 94%;
+
+    --muted: 232 20% 18%;
+    /* Much brighter muted text for readability */
+    --muted-foreground: 215 18% 62%;
+
+    --accent: 258 40% 20%;
+    --accent-foreground: 258 80% 82%;
+
+    --destructive: 0 72% 58%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Visible borders — key for dark mode depth */
+    --border: 232 20% 20%;
+    --input: 232 20% 18%;
+    --ring: 258 80% 70%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Outfit', system-ui, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 
-  code,
-  pre,
-  .font-mono {
+  .dark body,
+  body.dark {
+    background-image: radial-gradient(
+      ellipse 90% 40% at 50% 0%,
+      rgba(124, 58, 237, 0.10) 0%,
+      transparent 65%
+    );
+    background-attachment: fixed;
+  }
+
+  code, pre, .font-mono {
     font-family: 'JetBrains Mono', Consolas, monospace;
   }
 }
 
 @layer utilities {
+  .glow-violet {
+    box-shadow: 0 0 40px -8px rgba(139, 92, 246, 0.5);
+  }
+
+  /* Grid — more visible in dark */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .dark .bg-grid {
+    background-image:
+      linear-gradient(rgba(139,92,246,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139,92,246,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
   .text-gradient {
-    @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent;
   }
 
-  .bg-gradient-primary {
-    @apply bg-gradient-to-r from-indigo-500 to-purple-500;
-  }
-
-  .bg-gradient-dark {
-    @apply bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900;
-  }
-
-  .glass-effect {
-    @apply backdrop-blur-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm transition-all;
-  }
-
-  .glow-primary {
-    box-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
-    /* indigo-500 */
+  /* Dark mode card with visible border + slight glow */
+  .dark-card {
+    @apply bg-card border border-border rounded-xl;
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { @apply bg-transparent; }
+::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-muted-foreground/40; }
 
-::-webkit-scrollbar-track {
-  @apply bg-muted/50 rounded-full;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/30 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground/50;
-}
-
-/* Markdown styles */
-.markdown-preview {
-  @apply text-foreground;
-}
-
-.markdown-preview h1 {
-  @apply text-2xl font-bold mb-4 pb-2 border-b;
-}
-
-.markdown-preview h2 {
-  @apply text-xl font-semibold mt-6 mb-3;
-}
-
-.markdown-preview h3 {
-  @apply text-lg font-medium mt-4 mb-2;
-}
-
-.markdown-preview pre {
-  @apply bg-muted p-4 rounded-lg overflow-x-auto;
-}
-
-.markdown-preview code {
-  @apply bg-muted px-1.5 py-0.5 rounded text-sm;
-}
-
-.markdown-preview pre code {
-  @apply bg-transparent p-0;
-}
-
-.markdown-preview ul,
-.markdown-preview ol {
-  @apply pl-6 mb-4;
-}
-
-.markdown-preview li {
-  @apply mb-1;
-}
-
-.markdown-preview a {
-  @apply text-primary hover:underline;
-}
-
-.markdown-preview blockquote {
-  @apply border-l-4 border-primary/50 pl-4 italic text-muted-foreground;
-}
-
-.markdown-preview table {
-  @apply w-full border-collapse mb-4;
-}
-
-.markdown-preview th,
-.markdown-preview td {
-  @apply border border-border px-3 py-2 text-left;
-}
-
-.markdown-preview th {
-  @apply bg-muted font-medium;
-}
-
-/* Animation delays */
-.animation-delay-100 {
-  animation-delay: 100ms;
-}
-
-.animation-delay-200 {
-  animation-delay: 200ms;
-}
-
-.animation-delay-300 {
-  animation-delay: 300ms;
-}
-
-.animation-delay-400 {
-  animation-delay: 400ms;
-}
-
-.animation-delay-500 {
-  animation-delay: 500ms;
-}
+/* Markdown */
+.markdown-preview { @apply text-foreground leading-relaxed; }
+.markdown-preview h1 { @apply text-2xl font-bold mb-4 pb-2 border-b border-border; }
+.markdown-preview h2 { @apply text-xl font-semibold mt-6 mb-3; }
+.markdown-preview h3 { @apply text-lg font-medium mt-4 mb-2; }
+.markdown-preview pre { @apply bg-secondary p-4 rounded-xl overflow-x-auto my-4 border border-border; }
+.markdown-preview code { @apply bg-secondary px-1.5 py-0.5 rounded text-sm font-mono text-violet-400; }
+.markdown-preview pre code { @apply bg-transparent p-0 text-foreground; }
+.markdown-preview ul, .markdown-preview ol { @apply pl-6 mb-4 space-y-1; }
+.markdown-preview a { @apply text-violet-400 hover:text-violet-300 underline underline-offset-2; }
+.markdown-preview blockquote { @apply border-l-4 border-violet-500/50 pl-4 italic text-muted-foreground my-4 bg-violet-500/5 py-2 rounded-r-lg; }
+.markdown-preview table { @apply w-full border-collapse mb-4 text-sm; }
+.markdown-preview th, .markdown-preview td { @apply border border-border px-3 py-2 text-left; }
+.markdown-preview th { @apply bg-secondary font-semibold; }
+.markdown-preview p { @apply mb-3 leading-relaxed; }
+.markdown-preview img { @apply rounded-lg max-w-full; }
