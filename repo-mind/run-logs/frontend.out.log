@@ -1,0 +1,19 @@
+
+> repomind-frontend@1.0.0 dev
+> next dev -p 3000
+
+   ▲ Next.js 14.1.0
+   - Local:        http://localhost:3000
+
+ ✓ Ready in 2s
+ ○ Compiling / ...
+ ✓ Compiled / in 7.7s (591 modules)
+ ✓ Compiled in 735ms (305 modules)
+ ○ Compiling /login ...
+ ✓ Compiled /login in 897ms (608 modules)
+ ○ Compiling /register ...
+ ✓ Compiled /register in 665ms (620 modules)
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 15.4s (2669 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 3.6s (2674 modules)

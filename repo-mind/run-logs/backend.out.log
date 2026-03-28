@@ -1,0 +1,1619 @@
+Starting RepoMind API...
+2026-02-13 23:03:04,337 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:03:04,338 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("users")
+2026-02-13 23:03:04,338 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-13 23:03:04,343 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("repo_sessions")
+2026-02-13 23:03:04,343 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-13 23:03:04,344 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("generated_contents")
+2026-02-13 23:03:04,345 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-02-13 23:03:04,345 INFO sqlalchemy.engine.Engine COMMIT
+Database initialized
+INFO:     127.0.0.1:61075 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61073 - "GET /health HTTP/1.1" 200 OK
+2026-02-13 23:03:52,323 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:03:52,339 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-02-13 23:03:52,339 INFO sqlalchemy.engine.Engine [generated in 0.00065s] ('local62828@example.com',)
+2026-02-13 23:03:52,344 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = ?
+2026-02-13 23:03:52,345 INFO sqlalchemy.engine.Engine [generated in 0.00067s] ('local62828',)
+2026-02-13 23:03:53,021 INFO sqlalchemy.engine.Engine INSERT INTO users (email, username, hashed_password, is_active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)
+2026-02-13 23:03:53,024 INFO sqlalchemy.engine.Engine [generated in 0.00244s] ('local62828@example.com', 'local62828', '$2b$12$tPRzLOgFFFGKh85YOpkfweEyeGoOjKntg/My9ziy8PjPV3uA37qIG', 1, '2026-02-13 17:33:53.021611', '2026-02-13 17:33:53.021611')
+2026-02-13 23:03:53,027 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:03:53,034 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:03:53,036 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:03:53,038 INFO sqlalchemy.engine.Engine [generated in 0.00078s] (4,)
+2026-02-13 23:03:53,046 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:63232 - "POST /auth/register HTTP/1.1" 201 Created
+2026-02-13 23:03:53,087 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:03:53,087 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:03:53,087 INFO sqlalchemy.engine.Engine [generated in 0.00081s] (4,)
+2026-02-13 23:03:56,400 INFO sqlalchemy.engine.Engine INSERT INTO repo_sessions (user_id, repo_url, repo_owner, repo_name, repo_description, repo_metadata, file_structure, tech_stack, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-02-13 23:03:56,400 INFO sqlalchemy.engine.Engine [generated in 0.00078s] (4, 'https://github.com/octocat/Hello-World', 'octocat', 'Hello-World', 'My first repository on GitHub!', '{"full_name": "octocat/Hello-World", "description": "My first repository on GitHub!", "stars": 3492, "forks": 5807, "watchers": 3492, "open_issues":  ... (18 characters truncated) ... nch": "master", "created_at": "2011-01-26T19:01:12Z", "updated_at": "2026-02-13T03:58:18Z", "license": null, "topics": [], "size": 1, "homepage": ""}', '[{"name": "README", "path": "README", "type": "file"}]', '{"languages": {}, "frameworks": [], "package_managers": [], "detected_configs": []}', '2026-02-13 17:33:56.400420', '2026-02-13 17:33:56.400420')
+2026-02-13 23:03:56,405 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:03:56,409 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:03:56,411 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ?
+2026-02-13 23:03:56,413 INFO sqlalchemy.engine.Engine [generated in 0.00072s] (5,)
+2026-02-13 23:03:56,414 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:63232 - "POST /repo/analyze HTTP/1.1" 200 OK
+2026-02-13 23:03:56,429 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:03:56,429 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:03:56,429 INFO sqlalchemy.engine.Engine [cached since 3.341s ago] (4,)
+2026-02-13 23:03:56,433 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:03:56,433 INFO sqlalchemy.engine.Engine [generated in 0.00095s] (5, 4)
+2026-02-13 23:04:08,672 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:04:08,672 INFO sqlalchemy.engine.Engine [generated in 0.00081s] (5, 'readme', 1, 0)
+2026-02-13 23:04:10,414 INFO sqlalchemy.engine.Engine INSERT INTO generated_contents (repo_session_id, content_type, version, title, content, generation_params, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2026-02-13 23:04:10,416 INFO sqlalchemy.engine.Engine [generated in 0.00098s] (5, 'readme', 1, 'README for octocat/Hello-World', '# octocat/Hello-World\n\n## Project Description\nMy first repository on GitHub!\n\n## Installation\n1. Clone the repository.\n2. Install dependencies ... (448 characters truncated) ... 2. Create a feature branch.\n3. Commit and push changes.\n4. Open a pull request with a clear description.\n\n## License\nLicense is not specified.\n', '{"model": "llama3.2:latest", "include_sections": null, "custom_instructions": null, "had_existing_readme": true}', '2026-02-13 17:34:10.414043', '2026-02-13 17:34:10.414043')
+2026-02-13 23:04:10,418 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:04:10,427 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:04:10,431 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.id = ?
+2026-02-13 23:04:10,431 INFO sqlalchemy.engine.Engine [generated in 0.00056s] (5,)
+2026-02-13 23:04:10,432 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:63232 - "POST /readme/generate HTTP/1.1" 200 OK
+2026-02-13 23:04:10,438 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:04:10,446 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:04:10,446 INFO sqlalchemy.engine.Engine [cached since 17.36s ago] (4,)
+2026-02-13 23:04:10,449 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:04:10,449 INFO sqlalchemy.engine.Engine [cached since 14.01s ago] (5, 4)
+2026-02-13 23:04:13,121 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:04:13,121 INFO sqlalchemy.engine.Engine [cached since 4.45s ago] (5, 'project_summary', 1, 0)
+2026-02-13 23:04:13,126 INFO sqlalchemy.engine.Engine INSERT INTO generated_contents (repo_session_id, content_type, version, title, content, generation_params, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2026-02-13 23:04:13,126 INFO sqlalchemy.engine.Engine [cached since 2.711s ago] (5, 'project_summary', 1, 'Project Summary for octocat/Hello-World', '# Project Overview Report: octocat/Hello-World\n\n## 1. Project Overview\n### Problem Statement\nThis repository addresses a software delivery or pro ... (1043 characters truncated) ... B\n- Default branch: master\n- Open issues: 3433\n- Active modules snapshot:\n```text\n- README\n```\n\n## 5. Notes\nMy first repository on GitHub!\n', '{"model": "llama3.2:latest", "ai_available": true, "include_visuals": true, "custom_instructions": null}', '2026-02-13 17:34:13.126183', '2026-02-13 17:34:13.126183')
+2026-02-13 23:04:13,126 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:04:13,134 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:04:13,134 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.id = ?
+2026-02-13 23:04:13,134 INFO sqlalchemy.engine.Engine [cached since 2.707s ago] (6,)
+2026-02-13 23:04:13,139 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:63232 - "POST /documentation/generate HTTP/1.1" 200 OK
+2026-02-13 23:04:13,148 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:04:13,148 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:04:13,153 INFO sqlalchemy.engine.Engine [cached since 20.06s ago] (4,)
+2026-02-13 23:04:13,156 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:04:13,156 INFO sqlalchemy.engine.Engine [cached since 16.72s ago] (5, 4)
+2026-02-13 23:04:33,029 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:04:33,036 INFO sqlalchemy.engine.Engine [cached since 24.37s ago] (5, 'contributor_report', 1, 0)
+2026-02-13 23:04:33,040 INFO sqlalchemy.engine.Engine INSERT INTO generated_contents (repo_session_id, content_type, version, title, content, generation_params, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2026-02-13 23:04:33,041 INFO sqlalchemy.engine.Engine [cached since 22.63s ago] (5, 'contributor_report', 1, 'Contributor Insights for octocat/Hello-World', '# Contributor Activity Report: octocat/Hello-World\n\n## Contribution Health\n- Total contributors: 0\n- Active contributors (last 30 days): 0\n- Ina ... (306 characters truncated) ... ivity indicates current contributor participation and pull-request throughput. Use weekly and monthly trend charts for sprint and release planning.\n', '{"model": "llama3.2:latest", "ai_available": true, "months_back": 3, "custom_instructions": null, "analytics": {"commit_distribution": [], "weekly_ac ... (295 characters truncated) ... ners": [], "consistent_contributors": []}, "period_months": 3, "commit_total": 0}, "raw_counts": {"commits": 0, "pull_requests": 156, "issues": 451}}', '2026-02-13 17:34:33.040660', '2026-02-13 17:34:33.040660')
+2026-02-13 23:04:33,043 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:04:33,047 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:04:33,047 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.id = ?
+2026-02-13 23:04:33,047 INFO sqlalchemy.engine.Engine [cached since 22.62s ago] (7,)
+2026-02-13 23:04:33,053 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:63232 - "POST /insights/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53644 - "OPTIONS /auth/register HTTP/1.1" 200 OK
+2026-02-13 23:06:49,679 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:06:49,681 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-02-13 23:06:49,681 INFO sqlalchemy.engine.Engine [cached since 177.3s ago] ('raashish1601@gmail.com',)
+2026-02-13 23:06:49,683 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:53644 - "POST /auth/register HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:62527 - "OPTIONS /auth/login HTTP/1.1" 200 OK
+2026-02-13 23:07:01,996 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:01,997 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-02-13 23:07:01,997 INFO sqlalchemy.engine.Engine [cached since 189.7s ago] ('raashish1601@gmail.com',)
+2026-02-13 23:07:02,671 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:54372 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53681 - "OPTIONS /auth/me HTTP/1.1" 200 OK
+2026-02-13 23:07:18,259 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:18,259 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:18,262 INFO sqlalchemy.engine.Engine [cached since 205.2s ago] (3,)
+2026-02-13 23:07:18,265 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53681 - "GET /auth/me HTTP/1.1" 200 OK
+2026-02-13 23:07:18,272 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:18,273 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:18,273 INFO sqlalchemy.engine.Engine [cached since 205.2s ago] (3,)
+2026-02-13 23:07:18,274 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:53681 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54752 - "OPTIONS /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54752 - "OPTIONS /readme/check/ollama HTTP/1.1" 200 OK
+2026-02-13 23:07:23,653 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:23,653 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:23,653 INFO sqlalchemy.engine.Engine [cached since 210.6s ago] (3,)
+2026-02-13 23:07:23,659 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:54752 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54752 - "OPTIONS /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54752 - "OPTIONS /readme/check/ollama HTTP/1.1" 200 OK
+2026-02-13 23:07:23,667 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:23,667 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:23,667 INFO sqlalchemy.engine.Engine [cached since 210.6s ago] (3,)
+2026-02-13 23:07:23,681 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.user_id = ? ORDER BY repo_sessions.created_at DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:07:23,681 INFO sqlalchemy.engine.Engine [generated in 0.00045s] (3, 20, 0)
+2026-02-13 23:07:23,686 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:54752 - "GET /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64403 - "OPTIONS /readme/versions/4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64601 - "OPTIONS /documentation/versions/4?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62702 - "OPTIONS /documentation/versions/4?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64601 - "OPTIONS /insights/versions/4 HTTP/1.1" 200 OK
+2026-02-13 23:07:24,339 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,341 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,341 INFO sqlalchemy.engine.Engine [cached since 211.3s ago] (3,)
+INFO:     127.0.0.1:62702 - "OPTIONS /repo/sessions/4/history HTTP/1.1" 200 OK
+2026-02-13 23:07:24,343 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,343 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,343 INFO sqlalchemy.engine.Engine [cached since 211.3s ago] (3,)
+2026-02-13 23:07:24,346 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.user_id = ? ORDER BY repo_sessions.created_at DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:07:24,346 INFO sqlalchemy.engine.Engine [cached since 0.6667s ago] (3, 20, 0)
+2026-02-13 23:07:24,348 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:07:24,353 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:57642 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58513 - "GET /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+2026-02-13 23:07:24,361 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,361 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,361 INFO sqlalchemy.engine.Engine [cached since 211.3s ago] (3,)
+2026-02-13 23:07:24,366 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:07:24,367 INFO sqlalchemy.engine.Engine [cached since 207.9s ago] (4, 3)
+2026-02-13 23:07:24,367 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,369 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,369 INFO sqlalchemy.engine.Engine [cached since 211.3s ago] (3,)
+2026-02-13 23:07:24,373 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:07:24,373 INFO sqlalchemy.engine.Engine [generated in 0.00075s] (4, 'readme')
+2026-02-13 23:07:24,375 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:07:24,377 INFO sqlalchemy.engine.Engine [cached since 207.9s ago] (4, 3)
+2026-02-13 23:07:24,400 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:07:24,400 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:07:24,400 INFO sqlalchemy.engine.Engine [cached since 0.03192s ago] (4, 'project_summary')
+INFO:     127.0.0.1:57642 - "GET /readme/versions/4 HTTP/1.1" 200 OK
+2026-02-13 23:07:24,407 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:07:24,410 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,412 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,412 INFO sqlalchemy.engine.Engine [cached since 211.3s ago] (3,)
+INFO:     127.0.0.1:58513 - "GET /documentation/versions/4?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine [cached since 208s ago] (4, 3)
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine [cached since 211.3s ago] (3,)
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine [cached since 0.05158s ago] (4, 'license')
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:07:24,415 INFO sqlalchemy.engine.Engine [cached since 208s ago] (4, 3)
+2026-02-13 23:07:24,448 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:57642 - "GET /documentation/versions/4?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:07:24,452 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:07:24,452 INFO sqlalchemy.engine.Engine [cached since 0.07988s ago] (4, 'contributor_report')
+2026-02-13 23:07:24,458 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:07:24,458 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,460 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,460 INFO sqlalchemy.engine.Engine [cached since 211.4s ago] (3,)
+INFO:     127.0.0.1:58513 - "GET /insights/versions/4 HTTP/1.1" 200 OK
+2026-02-13 23:07:24,464 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:07:24,464 INFO sqlalchemy.engine.Engine [cached since 208s ago] (4, 3)
+2026-02-13 23:07:24,470 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:07:24,470 INFO sqlalchemy.engine.Engine [generated in 0.00075s] (4,)
+2026-02-13 23:07:24,470 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,470 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,470 INFO sqlalchemy.engine.Engine [cached since 211.4s ago] (3,)
+2026-02-13 23:07:24,470 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:07:24,470 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.user_id = ? ORDER BY repo_sessions.created_at DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:07:24,470 INFO sqlalchemy.engine.Engine [cached since 0.7975s ago] (3, 20, 0)
+INFO:     127.0.0.1:57642 - "GET /repo/sessions/4/history HTTP/1.1" 200 OK
+2026-02-13 23:07:24,479 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58513 - "GET /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+2026-02-13 23:07:24,488 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:07:24,488 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:07:24,488 INFO sqlalchemy.engine.Engine [cached since 211.4s ago] (3,)
+2026-02-13 23:07:24,488 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.user_id = ? ORDER BY repo_sessions.created_at DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:07:24,488 INFO sqlalchemy.engine.Engine [cached since 0.8129s ago] (3, 20, 0)
+2026-02-13 23:07:24,495 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:57642 - "GET /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54752 - "GET /readme/check/ollama HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57642 - "GET /readme/check/ollama HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54752 - "GET /readme/check/ollama HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57642 - "GET /readme/check/ollama HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49972 - "OPTIONS /readme/versions/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61692 - "OPTIONS /documentation/versions/3?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56320 - "OPTIONS /documentation/versions/3?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63978 - "OPTIONS /insights/versions/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59069 - "OPTIONS /repo/sessions/3/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60697 - "OPTIONS /readme/versions/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49972 - "OPTIONS /documentation/versions/3?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56320 - "OPTIONS /documentation/versions/3?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59069 - "OPTIONS /insights/versions/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60697 - "OPTIONS /repo/sessions/3/history HTTP/1.1" 200 OK
+2026-02-13 23:09:18,804 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,804 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,804 INFO sqlalchemy.engine.Engine [cached since 325.7s ago] (3,)
+2026-02-13 23:09:18,806 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,806 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,806 INFO sqlalchemy.engine.Engine [cached since 325.7s ago] (3,)
+2026-02-13 23:09:18,808 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,809 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,809 INFO sqlalchemy.engine.Engine [cached since 325.7s ago] (3,)
+2026-02-13 23:09:18,811 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,811 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,811 INFO sqlalchemy.engine.Engine [cached since 325.7s ago] (3,)
+2026-02-13 23:09:18,813 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,813 INFO sqlalchemy.engine.Engine [cached since 322.4s ago] (3, 3)
+2026-02-13 23:09:18,818 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,818 INFO sqlalchemy.engine.Engine [cached since 322.4s ago] (3, 3)
+2026-02-13 23:09:18,821 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,821 INFO sqlalchemy.engine.Engine [cached since 322.4s ago] (3, 3)
+2026-02-13 23:09:18,821 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,821 INFO sqlalchemy.engine.Engine [cached since 322.4s ago] (3, 3)
+2026-02-13 23:09:18,825 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine [cached since 114.5s ago] (3, 'license')
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine [cached since 114.5s ago] (3, 'readme')
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine [cached since 114.5s ago] (3, 'contributor_report')
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine [cached since 114.5s ago] (3, 'project_summary')
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:09:18,827 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:59069 - "GET /documentation/versions/3?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:09:18,843 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:09:18,846 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:49972 - "GET /readme/versions/3 HTTP/1.1" 200 OK
+2026-02-13 23:09:18,846 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,851 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,851 INFO sqlalchemy.engine.Engine [cached since 325.8s ago] (3,)
+INFO:     127.0.0.1:60697 - "GET /insights/versions/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56320 - "GET /documentation/versions/3?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:09:18,857 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,857 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,857 INFO sqlalchemy.engine.Engine [cached since 325.8s ago] (3,)
+2026-02-13 23:09:18,865 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,865 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,865 INFO sqlalchemy.engine.Engine [cached since 325.8s ago] (3,)
+2026-02-13 23:09:18,867 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,867 INFO sqlalchemy.engine.Engine [cached since 322.4s ago] (3, 3)
+2026-02-13 23:09:18,867 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,867 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,867 INFO sqlalchemy.engine.Engine [cached since 325.8s ago] (3,)
+2026-02-13 23:09:18,873 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,873 INFO sqlalchemy.engine.Engine [cached since 322.4s ago] (3, 3)
+2026-02-13 23:09:18,873 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:09:18,873 INFO sqlalchemy.engine.Engine [cached since 114.4s ago] (3,)
+2026-02-13 23:09:18,873 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,879 INFO sqlalchemy.engine.Engine [cached since 322.4s ago] (3, 3)
+2026-02-13 23:09:18,889 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,889 INFO sqlalchemy.engine.Engine [cached since 322.5s ago] (3, 3)
+2026-02-13 23:09:18,889 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:18,889 INFO sqlalchemy.engine.Engine [cached since 114.5s ago] (3, 'readme')
+2026-02-13 23:09:18,889 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:09:18,889 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:18,900 INFO sqlalchemy.engine.Engine [cached since 114.5s ago] (3, 'license')
+2026-02-13 23:09:18,900 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:18,900 INFO sqlalchemy.engine.Engine [cached since 114.5s ago] (3, 'contributor_report')
+2026-02-13 23:09:18,905 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:59069 - "GET /repo/sessions/3/history HTTP/1.1" 200 OK
+2026-02-13 23:09:18,910 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:60697 - "GET /readme/versions/3 HTTP/1.1" 200 OK
+2026-02-13 23:09:18,912 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:09:18,917 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,917 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,919 INFO sqlalchemy.engine.Engine [cached since 325.8s ago] (3,)
+INFO:     127.0.0.1:49972 - "GET /documentation/versions/3?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56320 - "GET /insights/versions/3 HTTP/1.1" 200 OK
+2026-02-13 23:09:18,923 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:18,923 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:18,923 INFO sqlalchemy.engine.Engine [cached since 325.8s ago] (3,)
+2026-02-13 23:09:18,925 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,925 INFO sqlalchemy.engine.Engine [cached since 322.5s ago] (3, 3)
+2026-02-13 23:09:18,927 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:18,927 INFO sqlalchemy.engine.Engine [cached since 322.5s ago] (3, 3)
+2026-02-13 23:09:18,929 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:09:18,929 INFO sqlalchemy.engine.Engine [cached since 114.5s ago] (3,)
+2026-02-13 23:09:18,932 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:18,932 INFO sqlalchemy.engine.Engine [cached since 114.6s ago] (3, 'project_summary')
+2026-02-13 23:09:18,934 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:09:18,937 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:59069 - "GET /documentation/versions/3?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60697 - "GET /repo/sessions/3/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49725 - "OPTIONS /insights/generate HTTP/1.1" 200 OK
+2026-02-13 23:09:29,914 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:29,914 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:29,914 INFO sqlalchemy.engine.Engine [cached since 336.8s ago] (3,)
+2026-02-13 23:09:29,918 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:29,918 INFO sqlalchemy.engine.Engine [cached since 333.5s ago] (3, 3)
+2026-02-13 23:09:52,015 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:09:52,015 INFO sqlalchemy.engine.Engine [cached since 343.3s ago] (3, 'contributor_report', 1, 0)
+2026-02-13 23:09:52,020 INFO sqlalchemy.engine.Engine INSERT INTO generated_contents (repo_session_id, content_type, version, title, content, generation_params, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2026-02-13 23:09:52,021 INFO sqlalchemy.engine.Engine [cached since 341.6s ago] (3, 'contributor_report', 1, 'Contributor Insights for booklore-app/booklore', '# Contributor Activity Report: booklore-app/booklore\n\n## Contribution Health\n- Total contributors: 56\n- Active contributors (last 30 days): 23\n- ... (419 characters truncated) ... ivity indicates current contributor participation and pull-request throughput. Use weekly and monthly trend charts for sprint and release planning.\n', '{"model": "llama3.2:latest", "ai_available": true, "months_back": 6, "custom_instructions": null, "analytics": {"commit_distribution": [{"author": "a ... (3406 characters truncated) ... daddy", "dependabot[bot]", "xcashy"]}, "period_months": 6, "commit_total": 600}, "raw_counts": {"commits": 600, "pull_requests": 500, "issues": 251}}', '2026-02-13 17:39:52.020418', '2026-02-13 17:39:52.020418')
+2026-02-13 23:09:52,021 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:09:52,035 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:52,035 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.id = ?
+2026-02-13 23:09:52,035 INFO sqlalchemy.engine.Engine [cached since 341.6s ago] (8,)
+2026-02-13 23:09:52,042 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:49725 - "POST /insights/generate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49725 - "OPTIONS /readme/versions/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57076 - "OPTIONS /documentation/versions/3?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49725 - "OPTIONS /documentation/versions/3?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57076 - "OPTIONS /insights/versions/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49725 - "OPTIONS /repo/sessions/3/history HTTP/1.1" 200 OK
+2026-02-13 23:09:52,074 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:52,074 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:52,075 INFO sqlalchemy.engine.Engine [cached since 359s ago] (3,)
+2026-02-13 23:09:52,076 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:52,076 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:52,076 INFO sqlalchemy.engine.Engine [cached since 359s ago] (3,)
+2026-02-13 23:09:52,076 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:52,082 INFO sqlalchemy.engine.Engine [cached since 355.6s ago] (3, 3)
+2026-02-13 23:09:52,082 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:52,091 INFO sqlalchemy.engine.Engine [cached since 355.7s ago] (3, 3)
+2026-02-13 23:09:52,097 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:52,097 INFO sqlalchemy.engine.Engine [cached since 147.7s ago] (3, 'project_summary')
+2026-02-13 23:09:52,104 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:52,104 INFO sqlalchemy.engine.Engine [cached since 147.7s ago] (3, 'readme')
+2026-02-13 23:09:52,112 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:49725 - "GET /documentation/versions/3?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:09:52,141 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:57076 - "GET /readme/versions/3 HTTP/1.1" 200 OK
+2026-02-13 23:09:52,174 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:52,176 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:52,176 INFO sqlalchemy.engine.Engine [cached since 359.1s ago] (3,)
+2026-02-13 23:09:52,176 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:52,176 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:52,176 INFO sqlalchemy.engine.Engine [cached since 359.1s ago] (3,)
+2026-02-13 23:09:52,182 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:52,182 INFO sqlalchemy.engine.Engine [cached since 355.7s ago] (3, 3)
+2026-02-13 23:09:52,182 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:52,182 INFO sqlalchemy.engine.Engine [cached since 355.7s ago] (3, 3)
+2026-02-13 23:09:52,182 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:52,182 INFO sqlalchemy.engine.Engine [cached since 147.8s ago] (3, 'contributor_report')
+2026-02-13 23:09:52,182 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:09:52,182 INFO sqlalchemy.engine.Engine [cached since 147.8s ago] (3, 'license')
+2026-02-13 23:09:52,193 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:09:52,193 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:57076 - "GET /insights/versions/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49725 - "GET /documentation/versions/3?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:09:52,201 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:09:52,201 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:09:52,201 INFO sqlalchemy.engine.Engine [cached since 359.1s ago] (3,)
+2026-02-13 23:09:52,207 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:09:52,207 INFO sqlalchemy.engine.Engine [cached since 355.8s ago] (3, 3)
+2026-02-13 23:09:52,207 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:09:52,207 INFO sqlalchemy.engine.Engine [cached since 147.7s ago] (3,)
+2026-02-13 23:09:52,215 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:57076 - "GET /repo/sessions/3/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52983 - "OPTIONS /repo/analyze HTTP/1.1" 200 OK
+2026-02-13 23:10:47,183 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:47,183 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:47,185 INFO sqlalchemy.engine.Engine [cached since 414.1s ago] (3,)
+2026-02-13 23:10:53,454 INFO sqlalchemy.engine.Engine INSERT INTO repo_sessions (user_id, repo_url, repo_owner, repo_name, repo_description, repo_metadata, file_structure, tech_stack, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-02-13 23:10:53,460 INFO sqlalchemy.engine.Engine [cached since 417.1s ago] (3, 'https://github.com/ashishpatel26/500-AI-Agents-Projects', 'ashishpatel26', '500-AI-Agents-Projects', 'The 500 AI Agents Projects is a curated collection of AI agent use cases across various industries. It showcases practical applications and provides  ... (10 characters truncated) ... pen-source projects for implementation, illustrating how AI agents are transforming sectors such as healthcare, finance, education, retail, and more.', '{"full_name": "ashishpatel26/500-AI-Agents-Projects", "description": "The 500 AI Agents Projects is a curated collection of AI agent use cases across ... (398 characters truncated) ... 7Z", "license": "MIT License", "topics": ["ai-agents", "genai"], "size": 1697, "homepage": "https://github.com/ashishpatel26/500-AI-Agents-Projects"}', '[{"name": ".github", "path": ".github", "type": "dir", "children": [{"name": "workflows", "path": ".github/workflows", "type": "dir", "children": [{" ... (1607 characters truncated) ...  "path": "images/industry_usecase.png", "type": "file"}, {"name": "industry_usecase1.png", "path": "images/industry_usecase1.png", "type": "file"}]}]', '{"languages": {}, "frameworks": ["GitHub Actions"], "package_managers": [], "detected_configs": [".github"]}', '2026-02-13 17:40:53.454661', '2026-02-13 17:40:53.454661')
+2026-02-13 23:10:53,463 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:10:53,475 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:53,477 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ?
+2026-02-13 23:10:53,477 INFO sqlalchemy.engine.Engine [cached since 417.1s ago] (6,)
+2026-02-13 23:10:53,481 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52983 - "POST /repo/analyze HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52983 - "OPTIONS /readme/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52983 - "OPTIONS /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52983 - "OPTIONS /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52983 - "OPTIONS /insights/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52983 - "OPTIONS /repo/sessions/6/history HTTP/1.1" 200 OK
+2026-02-13 23:10:53,583 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:53,584 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:53,585 INFO sqlalchemy.engine.Engine [cached since 420.5s ago] (3,)
+2026-02-13 23:10:53,588 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:53,588 INFO sqlalchemy.engine.Engine [cached since 417.2s ago] (6, 3)
+2026-02-13 23:10:53,591 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:10:53,592 INFO sqlalchemy.engine.Engine [cached since 209.2s ago] (6, 'readme')
+2026-02-13 23:10:53,594 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52983 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:10:53,700 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:53,719 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:53,719 INFO sqlalchemy.engine.Engine [cached since 420.6s ago] (3,)
+2026-02-13 23:10:53,723 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:53,723 INFO sqlalchemy.engine.Engine [cached since 417.3s ago] (6, 3)
+2026-02-13 23:10:53,726 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:10:53,726 INFO sqlalchemy.engine.Engine [cached since 209.4s ago] (6, 'project_summary')
+2026-02-13 23:10:53,728 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52983 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:10:53,751 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:53,753 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:53,753 INFO sqlalchemy.engine.Engine [cached since 420.7s ago] (3,)
+2026-02-13 23:10:53,756 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:53,756 INFO sqlalchemy.engine.Engine [cached since 417.3s ago] (6, 3)
+2026-02-13 23:10:53,763 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:10:53,763 INFO sqlalchemy.engine.Engine [cached since 209.4s ago] (6, 'license')
+2026-02-13 23:10:53,767 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52983 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:10:53,783 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:53,783 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:53,783 INFO sqlalchemy.engine.Engine [cached since 420.7s ago] (3,)
+2026-02-13 23:10:53,793 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:53,793 INFO sqlalchemy.engine.Engine [cached since 417.4s ago] (6, 3)
+2026-02-13 23:10:53,793 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:10:53,793 INFO sqlalchemy.engine.Engine [cached since 209.4s ago] (6, 'contributor_report')
+2026-02-13 23:10:53,803 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52983 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:10:53,823 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:53,824 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:53,824 INFO sqlalchemy.engine.Engine [cached since 420.7s ago] (3,)
+2026-02-13 23:10:54,015 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:54,029 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:54,029 INFO sqlalchemy.engine.Engine [cached since 420.9s ago] (3,)
+2026-02-13 23:10:54,029 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:54,032 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:54,032 INFO sqlalchemy.engine.Engine [cached since 420.9s ago] (3,)
+2026-02-13 23:10:54,033 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:54,033 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:54,033 INFO sqlalchemy.engine.Engine [cached since 420.9s ago] (3,)
+2026-02-13 23:10:54,033 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:54,035 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:54,036 INFO sqlalchemy.engine.Engine [cached since 420.9s ago] (3,)
+2026-02-13 23:10:54,038 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:54,038 INFO sqlalchemy.engine.Engine [cached since 417.6s ago] (6, 3)
+2026-02-13 23:10:54,041 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:54,041 INFO sqlalchemy.engine.Engine [cached since 417.6s ago] (6, 3)
+2026-02-13 23:10:54,043 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:54,043 INFO sqlalchemy.engine.Engine [cached since 417.6s ago] (6, 3)
+2026-02-13 23:10:54,046 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:54,046 INFO sqlalchemy.engine.Engine [cached since 417.6s ago] (6, 3)
+2026-02-13 23:10:54,047 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:54,048 INFO sqlalchemy.engine.Engine [cached since 417.6s ago] (6, 3)
+2026-02-13 23:10:54,051 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:10:54,053 INFO sqlalchemy.engine.Engine [cached since 209.6s ago] (6,)
+2026-02-13 23:10:54,055 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:10:54,057 INFO sqlalchemy.engine.Engine [cached since 209.7s ago] (6, 'license')
+2026-02-13 23:10:54,057 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:10:54,059 INFO sqlalchemy.engine.Engine [cached since 209.7s ago] (6, 'project_summary')
+2026-02-13 23:10:54,061 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:10:54,061 INFO sqlalchemy.engine.Engine [cached since 209.7s ago] (6, 'contributor_report')
+2026-02-13 23:10:54,063 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:10:54,064 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:10:54,065 INFO sqlalchemy.engine.Engine [cached since 209.7s ago] (6, 'readme')
+2026-02-13 23:10:54,079 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:10:54,081 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52983 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+2026-02-13 23:10:54,085 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:10:54,087 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:51182 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59343 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50267 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54677 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:10:54,111 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:10:54,113 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:10:54,113 INFO sqlalchemy.engine.Engine [cached since 421s ago] (3,)
+2026-02-13 23:10:54,115 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:10:54,116 INFO sqlalchemy.engine.Engine [cached since 417.7s ago] (6, 3)
+2026-02-13 23:10:54,121 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:10:54,122 INFO sqlalchemy.engine.Engine [cached since 209.7s ago] (6,)
+2026-02-13 23:10:54,124 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:56519 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56699 - "OPTIONS /documentation/generate HTTP/1.1" 200 OK
+2026-02-13 23:11:05,988 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:05,990 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:05,990 INFO sqlalchemy.engine.Engine [cached since 432.9s ago] (3,)
+2026-02-13 23:11:05,993 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:05,993 INFO sqlalchemy.engine.Engine [cached since 429.6s ago] (6, 3)
+2026-02-13 23:11:09,165 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:11:09,165 INFO sqlalchemy.engine.Engine [cached since 420.5s ago] (6, 'project_summary', 1, 0)
+2026-02-13 23:11:09,168 INFO sqlalchemy.engine.Engine INSERT INTO generated_contents (repo_session_id, content_type, version, title, content, generation_params, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2026-02-13 23:11:09,168 INFO sqlalchemy.engine.Engine [cached since 418.8s ago] (6, 'project_summary', 1, 'Project Summary for ashishpatel26/500-AI-Agents-Projects', '# Project Overview Report: ashishpatel26/500-AI-Agents-Projects\n\n## 1. Project Overview\n### Problem Statement\nThis repository addresses a softwar ... (1991 characters truncated) ... n-source projects for implementation, illustrating how AI agents are transforming sectors such as healthcare, finance, education, retail, and more.\n', '{"model": "llama3.2:latest", "ai_available": true, "include_visuals": true, "custom_instructions": null}', '2026-02-13 17:41:09.168969', '2026-02-13 17:41:09.168969')
+2026-02-13 23:11:09,173 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:09,182 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:09,182 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.id = ?
+2026-02-13 23:11:09,183 INFO sqlalchemy.engine.Engine [cached since 418.8s ago] (9,)
+2026-02-13 23:11:09,185 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:56699 - "POST /documentation/generate HTTP/1.1" 200 OK
+2026-02-13 23:11:09,197 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:09,197 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:09,197 INFO sqlalchemy.engine.Engine [cached since 436.1s ago] (3,)
+2026-02-13 23:11:09,197 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:09,197 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:09,201 INFO sqlalchemy.engine.Engine [cached since 436.1s ago] (3,)
+2026-02-13 23:11:09,205 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:09,205 INFO sqlalchemy.engine.Engine [cached since 432.8s ago] (6, 3)
+2026-02-13 23:11:09,205 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:09,205 INFO sqlalchemy.engine.Engine [cached since 432.8s ago] (6, 3)
+2026-02-13 23:11:09,211 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:09,211 INFO sqlalchemy.engine.Engine [cached since 224.8s ago] (6, 'readme')
+2026-02-13 23:11:09,213 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:09,213 INFO sqlalchemy.engine.Engine [cached since 224.8s ago] (6, 'project_summary')
+2026-02-13 23:11:09,217 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:09,218 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:56699 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54994 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:11:09,230 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:09,231 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:09,231 INFO sqlalchemy.engine.Engine [cached since 436.1s ago] (3,)
+2026-02-13 23:11:09,232 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:09,233 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:09,233 INFO sqlalchemy.engine.Engine [cached since 436.1s ago] (3,)
+2026-02-13 23:11:09,237 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:09,237 INFO sqlalchemy.engine.Engine [cached since 432.8s ago] (6, 3)
+2026-02-13 23:11:09,237 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:09,237 INFO sqlalchemy.engine.Engine [cached since 432.8s ago] (6, 3)
+2026-02-13 23:11:09,237 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:09,243 INFO sqlalchemy.engine.Engine [cached since 224.9s ago] (6, 'license')
+2026-02-13 23:11:09,245 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:09,245 INFO sqlalchemy.engine.Engine [cached since 224.9s ago] (6, 'contributor_report')
+2026-02-13 23:11:09,245 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:09,245 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:56699 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54994 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:11:09,259 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:09,259 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:09,259 INFO sqlalchemy.engine.Engine [cached since 436.2s ago] (3,)
+2026-02-13 23:11:09,261 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:09,261 INFO sqlalchemy.engine.Engine [cached since 432.8s ago] (6, 3)
+2026-02-13 23:11:09,266 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:11:09,266 INFO sqlalchemy.engine.Engine [cached since 224.8s ago] (6,)
+2026-02-13 23:11:09,270 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:56699 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+2026-02-13 23:11:30,837 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:30,837 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:30,838 INFO sqlalchemy.engine.Engine [cached since 457.7s ago] (3,)
+2026-02-13 23:11:30,843 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:30,843 INFO sqlalchemy.engine.Engine [cached since 454.4s ago] (6, 3)
+2026-02-13 23:11:38,580 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:11:38,581 INFO sqlalchemy.engine.Engine [cached since 449.9s ago] (6, 'contributor_report', 1, 0)
+2026-02-13 23:11:38,583 INFO sqlalchemy.engine.Engine INSERT INTO generated_contents (repo_session_id, content_type, version, title, content, generation_params, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2026-02-13 23:11:38,583 INFO sqlalchemy.engine.Engine [cached since 448.2s ago] (6, 'contributor_report', 1, 'Contributor Insights for ashishpatel26/500-AI-Agents-Projects', '# Contributor Activity Report: ashishpatel26/500-AI-Agents-Projects\n\n## Contribution Health\n- Total contributors: 2\n- Active contributors (last 3 ... (323 characters truncated) ... ivity indicates current contributor participation and pull-request throughput. Use weekly and monthly trend charts for sprint and release planning.\n', '{"model": "llama3.2:latest", "ai_available": true, "months_back": 6, "custom_instructions": null, "analytics": {"commit_distribution": [{"author": "a ... (621 characters truncated) ... patel26"], "consistent_contributors": []}, "period_months": 6, "commit_total": 12}, "raw_counts": {"commits": 12, "pull_requests": 33, "issues": 17}}', '2026-02-13 17:41:38.583262', '2026-02-13 17:41:38.583262')
+2026-02-13 23:11:38,588 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:38,594 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:38,597 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.id = ?
+2026-02-13 23:11:38,597 INFO sqlalchemy.engine.Engine [cached since 448.2s ago] (10,)
+2026-02-13 23:11:38,603 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:63734 - "POST /insights/generate HTTP/1.1" 200 OK
+2026-02-13 23:11:38,617 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:38,617 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:38,617 INFO sqlalchemy.engine.Engine [cached since 465.5s ago] (3,)
+2026-02-13 23:11:38,621 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:38,623 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:38,623 INFO sqlalchemy.engine.Engine [cached since 465.5s ago] (3,)
+2026-02-13 23:11:38,623 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:38,623 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:38,623 INFO sqlalchemy.engine.Engine [cached since 465.5s ago] (3,)
+2026-02-13 23:11:38,626 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:38,626 INFO sqlalchemy.engine.Engine [cached since 462.2s ago] (6, 3)
+2026-02-13 23:11:38,629 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:38,629 INFO sqlalchemy.engine.Engine [cached since 462.2s ago] (6, 3)
+2026-02-13 23:11:38,633 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:38,633 INFO sqlalchemy.engine.Engine [cached since 462.2s ago] (6, 3)
+2026-02-13 23:11:38,636 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:38,636 INFO sqlalchemy.engine.Engine [cached since 254.3s ago] (6, 'readme')
+2026-02-13 23:11:38,639 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:38,639 INFO sqlalchemy.engine.Engine [cached since 254.3s ago] (6, 'license')
+2026-02-13 23:11:38,643 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:38,643 INFO sqlalchemy.engine.Engine [cached since 254.3s ago] (6, 'project_summary')
+2026-02-13 23:11:38,643 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:38,643 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:38,650 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:63734 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58200 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63612 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:11:38,657 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:38,657 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:38,657 INFO sqlalchemy.engine.Engine [cached since 465.6s ago] (3,)
+2026-02-13 23:11:38,661 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:38,661 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:38,661 INFO sqlalchemy.engine.Engine [cached since 465.6s ago] (3,)
+2026-02-13 23:11:38,664 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:38,664 INFO sqlalchemy.engine.Engine [cached since 462.2s ago] (6, 3)
+2026-02-13 23:11:38,664 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:38,664 INFO sqlalchemy.engine.Engine [cached since 462.2s ago] (6, 3)
+2026-02-13 23:11:38,671 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:38,671 INFO sqlalchemy.engine.Engine [cached since 254.3s ago] (6, 'contributor_report')
+2026-02-13 23:11:38,673 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:11:38,673 INFO sqlalchemy.engine.Engine [cached since 254.2s ago] (6,)
+2026-02-13 23:11:38,673 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:38,679 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:63734 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58200 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+2026-02-13 23:11:59,795 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,797 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,797 INFO sqlalchemy.engine.Engine [cached since 486.7s ago] (3,)
+2026-02-13 23:11:59,799 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,799 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,799 INFO sqlalchemy.engine.Engine [cached since 486.7s ago] (3,)
+2026-02-13 23:11:59,802 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,802 INFO sqlalchemy.engine.Engine [cached since 483.4s ago] (4, 3)
+2026-02-13 23:11:59,804 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,804 INFO sqlalchemy.engine.Engine [cached since 483.4s ago] (4, 3)
+2026-02-13 23:11:59,806 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:59,806 INFO sqlalchemy.engine.Engine [cached since 275.4s ago] (4, 'readme')
+2026-02-13 23:11:59,809 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:59667 - "GET /readme/versions/4 HTTP/1.1" 200 OK
+2026-02-13 23:11:59,842 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:59,843 INFO sqlalchemy.engine.Engine [cached since 275.5s ago] (4, 'project_summary')
+2026-02-13 23:11:59,843 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,843 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,843 INFO sqlalchemy.engine.Engine [cached since 486.8s ago] (3,)
+2026-02-13 23:11:59,847 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58016 - "GET /documentation/versions/4?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:11:59,853 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,853 INFO sqlalchemy.engine.Engine [cached since 483.4s ago] (4, 3)
+2026-02-13 23:11:59,856 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,858 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,858 INFO sqlalchemy.engine.Engine [cached since 486.8s ago] (3,)
+2026-02-13 23:11:59,858 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:59,861 INFO sqlalchemy.engine.Engine [cached since 275.5s ago] (4, 'license')
+2026-02-13 23:11:59,863 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:59667 - "GET /documentation/versions/4?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:11:59,863 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,863 INFO sqlalchemy.engine.Engine [cached since 483.4s ago] (4, 3)
+2026-02-13 23:11:59,872 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,873 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,873 INFO sqlalchemy.engine.Engine [cached since 486.8s ago] (3,)
+2026-02-13 23:11:59,874 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:59,874 INFO sqlalchemy.engine.Engine [cached since 275.5s ago] (4, 'contributor_report')
+2026-02-13 23:11:59,874 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:59,874 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,874 INFO sqlalchemy.engine.Engine [cached since 483.4s ago] (4, 3)
+2026-02-13 23:11:59,874 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:11:59,889 INFO sqlalchemy.engine.Engine [cached since 275.4s ago] (4,)
+INFO:     127.0.0.1:58016 - "GET /insights/versions/4 HTTP/1.1" 200 OK
+2026-02-13 23:11:59,893 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:59,896 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,896 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,896 INFO sqlalchemy.engine.Engine [cached since 486.8s ago] (3,)
+INFO:     127.0.0.1:59667 - "GET /repo/sessions/4/history HTTP/1.1" 200 OK
+2026-02-13 23:11:59,901 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,901 INFO sqlalchemy.engine.Engine [cached since 483.5s ago] (4, 3)
+2026-02-13 23:11:59,905 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:59,905 INFO sqlalchemy.engine.Engine [cached since 275.5s ago] (4, 'readme')
+2026-02-13 23:11:59,905 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,905 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,905 INFO sqlalchemy.engine.Engine [cached since 486.8s ago] (3,)
+2026-02-13 23:11:59,911 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:59,914 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,914 INFO sqlalchemy.engine.Engine [cached since 483.5s ago] (4, 3)
+INFO:     127.0.0.1:58016 - "GET /readme/versions/4 HTTP/1.1" 200 OK
+2026-02-13 23:11:59,917 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:59,917 INFO sqlalchemy.engine.Engine [cached since 275.5s ago] (4, 'project_summary')
+2026-02-13 23:11:59,922 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:59,922 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,924 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,924 INFO sqlalchemy.engine.Engine [cached since 486.8s ago] (3,)
+INFO:     127.0.0.1:59667 - "GET /documentation/versions/4?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:11:59,924 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,924 INFO sqlalchemy.engine.Engine [cached since 483.5s ago] (4, 3)
+2026-02-13 23:11:59,933 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,934 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,934 INFO sqlalchemy.engine.Engine [cached since 486.8s ago] (3,)
+2026-02-13 23:11:59,935 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:59,935 INFO sqlalchemy.engine.Engine [cached since 275.6s ago] (4, 'license')
+2026-02-13 23:11:59,938 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,938 INFO sqlalchemy.engine.Engine [cached since 483.5s ago] (4, 3)
+2026-02-13 23:11:59,938 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:11:59,938 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:11:59,945 INFO sqlalchemy.engine.Engine [cached since 275.6s ago] (4, 'contributor_report')
+INFO:     127.0.0.1:58016 - "GET /documentation/versions/4?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:11:59,947 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:59667 - "GET /insights/versions/4 HTTP/1.1" 200 OK
+2026-02-13 23:11:59,952 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:11:59,953 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:11:59,953 INFO sqlalchemy.engine.Engine [cached since 486.9s ago] (3,)
+2026-02-13 23:11:59,955 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:11:59,955 INFO sqlalchemy.engine.Engine [cached since 483.5s ago] (4, 3)
+2026-02-13 23:11:59,959 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:11:59,960 INFO sqlalchemy.engine.Engine [cached since 275.5s ago] (4,)
+2026-02-13 23:11:59,960 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58016 - "GET /repo/sessions/4/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58016 - "OPTIONS /readme/4 HTTP/1.1" 200 OK
+2026-02-13 23:12:01,516 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:01,516 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:01,518 INFO sqlalchemy.engine.Engine [cached since 488.4s ago] (3,)
+2026-02-13 23:12:01,529 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents JOIN repo_sessions ON repo_sessions.id = generated_contents.repo_session_id 
+WHERE generated_contents.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:01,531 INFO sqlalchemy.engine.Engine [generated in 0.00167s] (4, 3)
+2026-02-13 23:12:01,535 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58016 - "GET /readme/4 HTTP/1.1" 200 OK
+2026-02-13 23:12:04,536 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,536 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,536 INFO sqlalchemy.engine.Engine [cached since 491.4s ago] (3,)
+2026-02-13 23:12:04,536 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,536 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,540 INFO sqlalchemy.engine.Engine [cached since 491.4s ago] (3,)
+2026-02-13 23:12:04,540 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,541 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,543 INFO sqlalchemy.engine.Engine [cached since 491.5s ago] (3,)
+2026-02-13 23:12:04,543 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,543 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,543 INFO sqlalchemy.engine.Engine [cached since 491.5s ago] (3,)
+2026-02-13 23:12:04,545 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,545 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,545 INFO sqlalchemy.engine.Engine [cached since 491.5s ago] (3,)
+2026-02-13 23:12:04,550 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,550 INFO sqlalchemy.engine.Engine [cached since 488.1s ago] (6, 3)
+2026-02-13 23:12:04,553 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,553 INFO sqlalchemy.engine.Engine [cached since 488.1s ago] (6, 3)
+2026-02-13 23:12:04,556 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,556 INFO sqlalchemy.engine.Engine [cached since 488.1s ago] (6, 3)
+2026-02-13 23:12:04,556 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,556 INFO sqlalchemy.engine.Engine [cached since 488.1s ago] (6, 3)
+2026-02-13 23:12:04,561 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,563 INFO sqlalchemy.engine.Engine [cached since 488.1s ago] (6, 3)
+2026-02-13 23:12:04,563 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:04,563 INFO sqlalchemy.engine.Engine [cached since 280.2s ago] (6, 'project_summary')
+2026-02-13 23:12:04,563 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:04,563 INFO sqlalchemy.engine.Engine [cached since 280.2s ago] (6, 'readme')
+2026-02-13 23:12:04,570 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:04,570 INFO sqlalchemy.engine.Engine [cached since 280.2s ago] (6, 'license')
+2026-02-13 23:12:04,571 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:04,574 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:12:04,574 INFO sqlalchemy.engine.Engine [cached since 280.1s ago] (6,)
+2026-02-13 23:12:04,575 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:04,577 INFO sqlalchemy.engine.Engine [cached since 280.2s ago] (6, 'contributor_report')
+2026-02-13 23:12:04,577 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:04,591 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:59667 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:12:04,595 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:04,595 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58016 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50824 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:12:04,607 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,607 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,607 INFO sqlalchemy.engine.Engine [cached since 491.5s ago] (3,)
+INFO:     127.0.0.1:59434 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57346 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:04,615 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,615 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,615 INFO sqlalchemy.engine.Engine [cached since 491.5s ago] (3,)
+2026-02-13 23:12:04,618 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,618 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,618 INFO sqlalchemy.engine.Engine [cached since 491.5s ago] (3,)
+2026-02-13 23:12:04,623 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,625 INFO sqlalchemy.engine.Engine [cached since 488.2s ago] (6, 3)
+2026-02-13 23:12:04,625 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,627 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,627 INFO sqlalchemy.engine.Engine [cached since 491.5s ago] (3,)
+2026-02-13 23:12:04,627 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:04,629 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:04,629 INFO sqlalchemy.engine.Engine [cached since 491.5s ago] (3,)
+2026-02-13 23:12:04,629 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,629 INFO sqlalchemy.engine.Engine [cached since 488.2s ago] (6, 3)
+2026-02-13 23:12:04,632 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,632 INFO sqlalchemy.engine.Engine [cached since 488.2s ago] (6, 3)
+2026-02-13 23:12:04,635 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:04,635 INFO sqlalchemy.engine.Engine [cached since 280.3s ago] (6, 'project_summary')
+2026-02-13 23:12:04,637 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,637 INFO sqlalchemy.engine.Engine [cached since 488.2s ago] (6, 3)
+2026-02-13 23:12:04,639 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:04,639 INFO sqlalchemy.engine.Engine [cached since 280.3s ago] (6, 'readme')
+2026-02-13 23:12:04,641 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:04,641 INFO sqlalchemy.engine.Engine [cached since 280.3s ago] (6, 'license')
+2026-02-13 23:12:04,643 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:04,643 INFO sqlalchemy.engine.Engine [cached since 488.2s ago] (6, 3)
+2026-02-13 23:12:04,643 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:04,646 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:04,646 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:12:04,646 INFO sqlalchemy.engine.Engine [cached since 280.2s ago] (6,)
+2026-02-13 23:12:04,651 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:04,653 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:04,653 INFO sqlalchemy.engine.Engine [cached since 280.3s ago] (6, 'contributor_report')
+INFO:     127.0.0.1:60473 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59667 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58016 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:12:04,659 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:04,660 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:50824 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59434 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:25,485 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:25,485 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = ?
+2026-02-13 23:12:25,490 INFO sqlalchemy.engine.Engine [cached since 513.2s ago] ('raashish1601@gmail.com',)
+2026-02-13 23:12:26,081 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52314 - "POST /auth/login HTTP/1.1" 200 OK
+2026-02-13 23:12:26,794 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,803 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,809 INFO sqlalchemy.engine.Engine [cached since 513.7s ago] (3,)
+2026-02-13 23:12:26,817 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,824 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,824 INFO sqlalchemy.engine.Engine [cached since 513.7s ago] (3,)
+2026-02-13 23:12:26,824 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,824 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,824 INFO sqlalchemy.engine.Engine [cached since 513.7s ago] (3,)
+2026-02-13 23:12:26,824 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,824 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,824 INFO sqlalchemy.engine.Engine [cached since 513.7s ago] (3,)
+2026-02-13 23:12:26,831 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,831 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,831 INFO sqlalchemy.engine.Engine [cached since 513.7s ago] (3,)
+2026-02-13 23:12:26,833 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,833 INFO sqlalchemy.engine.Engine [cached since 510.4s ago] (6, 3)
+2026-02-13 23:12:26,833 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.user_id = ? ORDER BY repo_sessions.created_at DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:12:26,837 INFO sqlalchemy.engine.Engine [cached since 303.2s ago] (3, 20, 0)
+2026-02-13 23:12:26,838 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,838 INFO sqlalchemy.engine.Engine [cached since 510.4s ago] (6, 3)
+2026-02-13 23:12:26,853 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,853 INFO sqlalchemy.engine.Engine [cached since 510.4s ago] (6, 3)
+2026-02-13 23:12:26,853 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,858 INFO sqlalchemy.engine.Engine [cached since 510.4s ago] (6, 3)
+2026-02-13 23:12:26,858 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:26,858 INFO sqlalchemy.engine.Engine [cached since 302.5s ago] (6, 'readme')
+2026-02-13 23:12:26,861 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:26,861 INFO sqlalchemy.engine.Engine [cached since 302.5s ago] (6, 'project_summary')
+2026-02-13 23:12:26,865 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:26,865 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:26,865 INFO sqlalchemy.engine.Engine [cached since 302.5s ago] (6, 'license')
+INFO:     127.0.0.1:52314 - "GET /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+2026-02-13 23:12:26,873 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:26,873 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:26,873 INFO sqlalchemy.engine.Engine [cached since 302.5s ago] (6, 'contributor_report')
+2026-02-13 23:12:26,881 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:26,884 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:26,884 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,886 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,886 INFO sqlalchemy.engine.Engine [cached since 513.8s ago] (3,)
+INFO:     127.0.0.1:54008 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:26,886 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58531 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58957 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+2026-02-13 23:12:26,900 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,900 INFO sqlalchemy.engine.Engine [cached since 510.5s ago] (6, 3)
+2026-02-13 23:12:26,900 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,902 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,902 INFO sqlalchemy.engine.Engine [cached since 513.8s ago] (3,)
+INFO:     127.0.0.1:54845 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:26,902 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,906 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,907 INFO sqlalchemy.engine.Engine [cached since 513.8s ago] (3,)
+2026-02-13 23:12:26,907 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,907 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,907 INFO sqlalchemy.engine.Engine [cached since 513.8s ago] (3,)
+2026-02-13 23:12:26,914 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:26,914 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:12:26,914 INFO sqlalchemy.engine.Engine [cached since 302.4s ago] (6,)
+2026-02-13 23:12:26,914 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.user_id = ? ORDER BY repo_sessions.created_at DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:12:26,914 INFO sqlalchemy.engine.Engine [cached since 303.2s ago] (3, 20, 0)
+2026-02-13 23:12:26,920 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,921 INFO sqlalchemy.engine.Engine [cached since 510.5s ago] (6, 3)
+2026-02-13 23:12:26,921 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,923 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,923 INFO sqlalchemy.engine.Engine [cached since 513.8s ago] (3,)
+INFO:     127.0.0.1:54008 - "GET /auth/me HTTP/1.1" 200 OK
+2026-02-13 23:12:26,926 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:26,929 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:26,929 INFO sqlalchemy.engine.Engine [cached since 302.6s ago] (6, 'readme')
+2026-02-13 23:12:26,931 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52314 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+2026-02-13 23:12:26,942 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,954 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,954 INFO sqlalchemy.engine.Engine [cached since 513.9s ago] (3,)
+2026-02-13 23:12:26,955 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,955 INFO sqlalchemy.engine.Engine [cached since 510.5s ago] (6, 3)
+2026-02-13 23:12:26,963 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58531 - "GET /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+2026-02-13 23:12:26,963 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,963 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,963 INFO sqlalchemy.engine.Engine [cached since 513.9s ago] (3,)
+INFO:     127.0.0.1:58957 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:26,971 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:26,971 INFO sqlalchemy.engine.Engine [cached since 302.6s ago] (6, 'project_summary')
+2026-02-13 23:12:26,976 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,976 INFO sqlalchemy.engine.Engine [cached since 510.5s ago] (6, 3)
+2026-02-13 23:12:26,976 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,976 INFO sqlalchemy.engine.Engine [cached since 510.5s ago] (6, 3)
+2026-02-13 23:12:26,976 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,976 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,976 INFO sqlalchemy.engine.Engine [cached since 513.9s ago] (3,)
+2026-02-13 23:12:26,987 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:26,987 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:26,987 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:26,987 INFO sqlalchemy.engine.Engine [cached since 513.9s ago] (3,)
+2026-02-13 23:12:26,991 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:26,991 INFO sqlalchemy.engine.Engine [cached since 302.6s ago] (6, 'license')
+2026-02-13 23:12:26,993 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:26,993 INFO sqlalchemy.engine.Engine [cached since 302.6s ago] (6, 'contributor_report')
+2026-02-13 23:12:26,993 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:54845 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:12:26,999 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:26,999 INFO sqlalchemy.engine.Engine [cached since 510.6s ago] (6, 3)
+2026-02-13 23:12:26,999 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,005 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58531 - "GET /auth/me HTTP/1.1" 200 OK
+2026-02-13 23:12:27,005 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,011 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,011 INFO sqlalchemy.engine.Engine [cached since 513.9s ago] (3,)
+2026-02-13 23:12:27,013 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:12:27,013 INFO sqlalchemy.engine.Engine [cached since 302.5s ago] (6,)
+INFO:     127.0.0.1:54008 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52314 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:27,021 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.user_id = ? ORDER BY repo_sessions.created_at DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:12:27,021 INFO sqlalchemy.engine.Engine [cached since 303.3s ago] (3, 20, 0)
+2026-02-13 23:12:27,021 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,029 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,029 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,029 INFO sqlalchemy.engine.Engine [cached since 513.9s ago] (3,)
+2026-02-13 23:12:27,029 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,035 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,035 INFO sqlalchemy.engine.Engine [cached since 513.9s ago] (3,)
+2026-02-13 23:12:27,037 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,037 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,037 INFO sqlalchemy.engine.Engine [cached since 513.9s ago] (3,)
+2026-02-13 23:12:27,043 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,043 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,043 INFO sqlalchemy.engine.Engine [cached since 510.6s ago] (6, 3)
+INFO:     127.0.0.1:58957 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+2026-02-13 23:12:27,052 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,053 INFO sqlalchemy.engine.Engine [cached since 510.6s ago] (6, 3)
+2026-02-13 23:12:27,055 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,055 INFO sqlalchemy.engine.Engine [cached since 510.6s ago] (6, 3)
+INFO:     127.0.0.1:54845 - "GET /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53895 - "GET /readme/check/ollama HTTP/1.1" 200 OK
+2026-02-13 23:12:27,063 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:27,063 INFO sqlalchemy.engine.Engine [cached since 302.7s ago] (6, 'readme')
+2026-02-13 23:12:27,063 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,063 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,063 INFO sqlalchemy.engine.Engine [cached since 514s ago] (3,)
+2026-02-13 23:12:27,071 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:27,071 INFO sqlalchemy.engine.Engine [cached since 302.7s ago] (6, 'project_summary')
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine [cached since 302.7s ago] (6, 'license')
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine [cached since 514s ago] (3,)
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine [cached since 514s ago] (3,)
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine [cached since 510.6s ago] (6, 3)
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,074 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,090 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,091 INFO sqlalchemy.engine.Engine [cached since 510.7s ago] (6, 3)
+INFO:     127.0.0.1:58531 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:27,091 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.user_id = ? ORDER BY repo_sessions.created_at DESC
+ LIMIT ? OFFSET ?
+2026-02-13 23:12:27,091 INFO sqlalchemy.engine.Engine [cached since 303.4s ago] (3, 20, 0)
+2026-02-13 23:12:27,091 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:27,091 INFO sqlalchemy.engine.Engine [cached since 302.7s ago] (6, 'contributor_report')
+INFO:     127.0.0.1:52314 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54008 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:12:27,723 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:12:27,723 INFO sqlalchemy.engine.Engine [cached since 303.3s ago] (6,)
+2026-02-13 23:12:27,731 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,733 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,733 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,733 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,733 INFO sqlalchemy.engine.Engine [cached since 514.6s ago] (3,)
+INFO:     127.0.0.1:53895 - "GET /repo/sessions?limit=20&offset=0 HTTP/1.1" 200 OK
+2026-02-13 23:12:27,733 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,741 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,741 INFO sqlalchemy.engine.Engine [cached since 514.7s ago] (3,)
+2026-02-13 23:12:27,744 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:58957 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:27,752 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,752 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,752 INFO sqlalchemy.engine.Engine [cached since 514.7s ago] (3,)
+2026-02-13 23:12:27,752 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,752 INFO sqlalchemy.engine.Engine [cached since 511.3s ago] (6, 3)
+2026-02-13 23:12:27,752 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,752 INFO sqlalchemy.engine.Engine [cached since 511.3s ago] (6, 3)
+INFO:     127.0.0.1:54845 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+2026-02-13 23:12:27,764 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,764 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,764 INFO sqlalchemy.engine.Engine [cached since 514.7s ago] (3,)
+2026-02-13 23:12:27,788 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:27,788 INFO sqlalchemy.engine.Engine [cached since 303.4s ago] (6, 'readme')
+2026-02-13 23:12:27,792 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,792 INFO sqlalchemy.engine.Engine [cached since 511.4s ago] (6, 3)
+2026-02-13 23:12:27,792 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-02-13 23:12:27,792 INFO sqlalchemy.engine.Engine SELECT users.id, users.email, users.username, users.hashed_password, users.is_active, users.created_at, users.updated_at 
+FROM users 
+WHERE users.id = ?
+2026-02-13 23:12:27,794 INFO sqlalchemy.engine.Engine [cached since 514.7s ago] (3,)
+2026-02-13 23:12:27,795 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:27,795 INFO sqlalchemy.engine.Engine [cached since 303.4s ago] (6, 'license')
+2026-02-13 23:12:27,795 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,795 INFO sqlalchemy.engine.Engine [cached since 511.4s ago] (6, 3)
+2026-02-13 23:12:27,795 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,801 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:27,801 INFO sqlalchemy.engine.Engine [cached since 303.4s ago] (6, 'project_summary')
+2026-02-13 23:12:27,803 INFO sqlalchemy.engine.Engine SELECT repo_sessions.id, repo_sessions.user_id, repo_sessions.repo_url, repo_sessions.repo_owner, repo_sessions.repo_name, repo_sessions.repo_description, repo_sessions.repo_metadata, repo_sessions.file_structure, repo_sessions.tech_stack, repo_sessions.created_at, repo_sessions.updated_at 
+FROM repo_sessions 
+WHERE repo_sessions.id = ? AND repo_sessions.user_id = ?
+2026-02-13 23:12:27,803 INFO sqlalchemy.engine.Engine [cached since 511.4s ago] (6, 3)
+2026-02-13 23:12:27,803 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? AND generated_contents.content_type = ? ORDER BY generated_contents.version DESC
+2026-02-13 23:12:27,803 INFO sqlalchemy.engine.Engine [cached since 303.4s ago] (6, 'contributor_report')
+2026-02-13 23:12:27,803 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:52314 - "GET /readme/versions/6 HTTP/1.1" 200 OK
+2026-02-13 23:12:27,812 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,812 INFO sqlalchemy.engine.Engine COMMIT
+2026-02-13 23:12:27,812 INFO sqlalchemy.engine.Engine SELECT generated_contents.id, generated_contents.repo_session_id, generated_contents.content_type, generated_contents.version, generated_contents.title, generated_contents.content, generated_contents.generation_params, generated_contents.created_at, generated_contents.updated_at 
+FROM generated_contents 
+WHERE generated_contents.repo_session_id = ? ORDER BY generated_contents.created_at DESC
+2026-02-13 23:12:27,812 INFO sqlalchemy.engine.Engine [cached since 303.3s ago] (6,)
+INFO:     127.0.0.1:54008 - "GET /documentation/versions/6?document_type=license HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58957 - "GET /insights/versions/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53895 - "GET /documentation/versions/6?document_type=project_summary HTTP/1.1" 200 OK
+2026-02-13 23:12:27,821 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     127.0.0.1:54845 - "GET /repo/sessions/6/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58531 - "GET /readme/check/ollama HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54845 - "GET /readme/check/ollama HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58531 - "GET /readme/check/ollama HTTP/1.1" 200 OK
