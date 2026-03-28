@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState, type FormEvent, type MouseEvent } from "react";
-import { Github, Loader2, Search, Sparkles, Star, GitFork, AlertCircle, Trash2, FileText, BookOpen, BarChart2 } from "lucide-react";
+import { useEffect, useState, type FormEvent, type MouseEvent } from "react";
+import { Github, Loader2, Search, Sparkles, Star, GitFork, AlertCircle, Trash2, FileText, BookOpen, BarChart2, ArrowRight } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRepoStore } from "@/lib/store";
 import { formatNumber, formatRelativeTime, isValidGitHubUrl } from "@/lib/utils";
-import type { RepoSession } from "@/lib/api";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const { toast } = useToast();
@@ -168,33 +168,91 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Quick links to workspace */}
-      {currentSession && (
-        <div className="space-y-3">
-          <h2 className="text-lg font-semibold text-foreground">Generate for <span className="text-amber-500">{currentSession.repo_name}</span></h2>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              { href: "/dashboard/readme", label: "README", desc: "Generate a comprehensive README file", icon: FileText, color: "text-orange-500", bg: "bg-orange-500/10" },
-              { href: "/dashboard/documentation", label: "Documentation", desc: "Project summary and license docs", icon: BookOpen, color: "text-amber-500", bg: "bg-amber-500/10" },
-              { href: "/dashboard/insights", label: "Insights", desc: "Contributor analytics and metrics", icon: BarChart2, color: "text-red-500", bg: "bg-red-500/10" },
-            ].map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="flex items-start gap-3 p-4 rounded-2xl border border-border/50 bg-card/40 hover:border-border hover:shadow-sm transition-all duration-200 group"
-              >
-                <div className={`w-9 h-9 rounded-xl ${item.bg} flex items-center justify-center shrink-0`}>
-                  <item.icon className={`w-4 h-4 ${item.color}`} />
+      {/* What We Offer */}
+      <div className="space-y-5">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-foreground">What We Offer</h2>
+          <p className="text-sm text-muted-foreground mt-1">Three powerful tools to supercharge your repository workflow</p>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-3">
+          {[
+            {
+              href: "/dashboard/readme",
+              label: "README",
+              tagline: "Auto-generate beautiful READMEs",
+              desc: "Turn your repository into a well-documented project instantly. Our AI analyzes your code structure, tech stack, and purpose to craft a professional README.",
+              features: ["Project overview & badges", "Setup & installation guide", "Custom instructions support", "Edit & version history"],
+              icon: FileText,
+              accent: "text-orange-500",
+              bg: "bg-orange-500/10",
+              border: "hover:border-orange-500/40",
+              btn: "bg-orange-500 hover:bg-orange-600",
+            },
+            {
+              href: "/dashboard/documentation",
+              label: "Documentation",
+              tagline: "Rich project documentation",
+              desc: "Generate comprehensive project summaries and license files. Keep your documentation in sync with your codebase automatically.",
+              features: ["Project summary docs", "License generation", "Visual diagram support", "Markdown export"],
+              icon: BookOpen,
+              accent: "text-amber-500",
+              bg: "bg-amber-500/10",
+              border: "hover:border-amber-500/40",
+              btn: "bg-amber-500 hover:bg-amber-600 text-black",
+            },
+            {
+              href: "/dashboard/insights",
+              label: "Insights",
+              tagline: "Deep contributor analytics",
+              desc: "Visualize contributor activity, commit distribution, and repository velocity. Understand who drives your project and how it evolves over time.",
+              features: ["Commit activity charts", "Contributor breakdown", "PR & issue stats", "Rolling time horizons"],
+              icon: BarChart2,
+              accent: "text-red-500",
+              bg: "bg-red-500/10",
+              border: "hover:border-red-500/40",
+              btn: "bg-red-500 hover:bg-red-600",
+            },
+          ].map((item) => (
+            <div
+              key={item.href}
+              className={`group relative flex flex-col p-6 rounded-2xl border border-border/50 bg-card/40 backdrop-blur-sm transition-all duration-300 hover:shadow-lg ${item.border} hover:-translate-y-0.5`}
+            >
+              {/* Icon + label */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className={`w-11 h-11 rounded-xl ${item.bg} flex items-center justify-center shrink-0`}>
+                  <item.icon className={`w-5 h-5 ${item.accent}`} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{item.label}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
+                  <p className={`text-xs font-semibold uppercase tracking-wider ${item.accent}`}>{item.label}</p>
+                  <p className="text-sm font-bold text-foreground leading-tight">{item.tagline}</p>
                 </div>
-              </a>
-            ))}
-          </div>
+              </div>
+
+              {/* Description */}
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.desc}</p>
+
+              {/* Feature list */}
+              <ul className="space-y-1.5 mb-6 flex-1">
+                {item.features.map((f) => (
+                  <li key={f} className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className={`w-1.5 h-1.5 rounded-full ${item.bg} ${item.accent} shrink-0`} style={{ background: "currentColor" }} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Navigate button — always visible, stronger on hover */}
+              <Link
+                href={item.href}
+                className={`flex items-center justify-center gap-2 w-full h-10 rounded-xl text-sm font-semibold text-white transition-all duration-200 ${item.btn} opacity-80 group-hover:opacity-100 group-hover:shadow-md`}
+              >
+                Open {item.label}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }
