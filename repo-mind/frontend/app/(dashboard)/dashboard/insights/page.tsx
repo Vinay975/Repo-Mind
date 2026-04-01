@@ -13,8 +13,10 @@ import { useRepoStore, useInsightsStore } from "@/lib/store";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/lib/api";
 import { formatRelativeTime } from "@/lib/utils";
-import { BarChart2, Loader2, Download, Save, RefreshCw, Eye, Edit3, Clock, Sparkles, Copy, Check, History } from "lucide-react";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar } from "recharts";
+import { BarChart2, Loader2, Download, Save, RefreshCw, Eye, Edit3, Clock, Sparkles, Copy, Check, History, ExternalLink } from "lucide-react";
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, PieChart, Pie, Cell, Legend, AreaChart, Area, RadialBarChart, RadialBar } from "recharts";
+
+const COLORS = ["#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444", "#ec4899", "#3b82f6", "#84cc16"];
 
 export default function InsightsPage() {
   const router = useRouter();
@@ -200,36 +202,114 @@ export default function InsightsPage() {
                       ))}
                     </div>
 
-                    {/* Charts */}
+                    {/* Charts Row 1 */}
                     <div className="grid gap-4 md:grid-cols-2">
                       <Card className="border-border/50">
-                        <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Commit Activity</CardTitle></CardHeader>
+                        <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Monthly Commit Activity</CardTitle></CardHeader>
                         <CardContent>
                           <ResponsiveContainer width="100%" height={180}>
-                            <LineChart data={analytics.monthly_activity.map((a) => ({ date: a.period, commits: a.commits }))}>
+                            <AreaChart data={analytics.monthly_activity.map((a) => ({ date: a.period, commits: a.commits }))}>
+                              <defs>
+                                <linearGradient id="commitGrad" x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
+                                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                                </linearGradient>
+                              </defs>
                               <XAxis dataKey="date" fontSize={10} tickLine={false} axisLine={false} />
                               <YAxis fontSize={10} tickLine={false} axisLine={false} />
                               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
-                              <Line type="monotone" dataKey="commits" stroke="#8b5cf6" strokeWidth={2} dot={false} />
-                            </LineChart>
+                              <Area type="monotone" dataKey="commits" stroke="#8b5cf6" strokeWidth={2} fill="url(#commitGrad)" dot={false} />
+                            </AreaChart>
                           </ResponsiveContainer>
                         </CardContent>
                       </Card>
 
                       <Card className="border-border/50">
-                        <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Commits by Author</CardTitle></CardHeader>
+                        <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Weekly Activity</CardTitle></CardHeader>
                         <CardContent>
                           <ResponsiveContainer width="100%" height={180}>
-                            <BarChart data={analytics.commit_distribution.slice(0, 8).map((d) => ({ name: d.author.split(" ")[0], value: d.commits }))}>
-                              <XAxis dataKey="name" fontSize={10} tickLine={false} axisLine={false} />
+                            <BarChart data={analytics.weekly_activity.slice(-8).map((a) => ({ date: a.period, commits: a.commits }))}>
+                              <XAxis dataKey="date" fontSize={10} tickLine={false} axisLine={false} />
                               <YAxis fontSize={10} tickLine={false} axisLine={false} />
                               <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
-                              <Bar dataKey="value" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                              <Bar dataKey="commits" fill="#06b6d4" radius={[4, 4, 0, 0]} />
                             </BarChart>
                           </ResponsiveContainer>
                         </CardContent>
                       </Card>
                     </div>
+
+                    {/* Charts Row 2 */}
+                    <div className="grid gap-4 md:grid-cols-3">
+                      <Card className="border-border/50">
+                        <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Commits by Author</CardTitle></CardHeader>
+                        <CardContent>
+                          <ResponsiveContainer width="100%" height={180}>
+                            <PieChart>
+                              <Pie data={analytics.commit_distribution.slice(0, 6).map((d) => ({ name: d.author.split(" ")[0], value: d.commits }))} cx="50%" cy="50%" innerRadius={45} outerRadius={70} paddingAngle={3} dataKey="value">
+                                {analytics.commit_distribution.slice(0, 6).map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                              </Pie>
+                              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+                              <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                            </PieChart>
+                          </ResponsiveContainer>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/50">
+                        <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">PR Overview</CardTitle></CardHeader>
+                        <CardContent>
+                          <ResponsiveContainer width="100%" height={180}>
+                            <BarChart data={[
+                              { name: "Opened", value: analytics.pull_request_stats.opened },
+                              { name: "Merged", value: analytics.pull_request_stats.merged },
+                              { name: "Rejected", value: analytics.pull_request_stats.rejected },
+                            ]} layout="vertical">
+                              <XAxis type="number" fontSize={10} tickLine={false} axisLine={false} />
+                              <YAxis type="category" dataKey="name" fontSize={10} tickLine={false} axisLine={false} width={55} />
+                              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+                              <Bar dataKey="value" radius={[0, 4, 4, 0]}>
+                                {["#8b5cf6", "#10b981", "#ef4444"].map((c, i) => <Cell key={i} fill={c} />)}
+                              </Bar>
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/50">
+                        <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Contributor Status</CardTitle></CardHeader>
+                        <CardContent>
+                          <ResponsiveContainer width="100%" height={180}>
+                            <RadialBarChart cx="50%" cy="50%" innerRadius={20} outerRadius={70} data={[
+                              { name: "Active", value: analytics.contributor_activity.active, fill: "#10b981" },
+                              { name: "Inactive", value: analytics.contributor_activity.inactive, fill: "#ef4444" },
+                              { name: "Total", value: analytics.contributor_activity.total, fill: "#8b5cf6" },
+                            ]}>
+                              <RadialBar dataKey="value" cornerRadius={4} />
+                              <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+                            </RadialBarChart>
+                          </ResponsiveContainer>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Charts Row 3 */}
+                    <Card className="border-border/50">
+                      <CardHeader className="pb-2"><CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Commits by Author (Bar)</CardTitle></CardHeader>
+                      <CardContent>
+                        <ResponsiveContainer width="100%" height={180}>
+                          <BarChart data={analytics.commit_distribution.slice(0, 8).map((d) => ({ name: d.author.split(" ")[0], value: d.commits }))}>
+                            <XAxis dataKey="name" fontSize={10} tickLine={false} axisLine={false} />
+                            <YAxis fontSize={10} tickLine={false} axisLine={false} />
+                            <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                              {analytics.commit_distribution.slice(0, 8).map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </CardContent>
+                    </Card>
 
                     {/* Top contributors */}
                     <Card className="border-border/50">
@@ -237,17 +317,36 @@ export default function InsightsPage() {
                       <CardContent className="space-y-3 text-sm">
                         <div className="flex justify-between items-center">
                           <span className="text-muted-foreground">Most active</span>
-                          <span className="font-medium text-foreground">{analytics.top_contributors.most_active || "N/A"}</span>
+                          {analytics.top_contributors.most_active ? (
+                            <a href={`https://github.com/${analytics.top_contributors.most_active}`} target="_blank" rel="noopener noreferrer"
+                              className="font-medium text-foreground hover:text-violet-500 flex items-center gap-1 transition-colors">
+                              {analytics.top_contributors.most_active}<ExternalLink className="w-3 h-3" />
+                            </a>
+                          ) : <span className="text-muted-foreground">N/A</span>}
                         </div>
                         <Separator />
                         <div>
-                          <span className="text-muted-foreground text-xs block mb-1">Core maintainers</span>
-                          <span className="font-medium text-violet-500">{analytics.top_contributors.core_maintainers.join(", ") || "N/A"}</span>
+                          <span className="text-muted-foreground text-xs block mb-2">Core maintainers</span>
+                          <div className="flex flex-wrap gap-2">
+                            {analytics.top_contributors.core_maintainers.length ? analytics.top_contributors.core_maintainers.map((u) => (
+                              <a key={u} href={`https://github.com/${u}`} target="_blank" rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-500 text-xs hover:bg-violet-500/20 transition-colors">
+                                {u}<ExternalLink className="w-2.5 h-2.5" />
+                              </a>
+                            )) : <span className="text-muted-foreground text-xs">N/A</span>}
+                          </div>
                         </div>
                         <Separator />
                         <div>
-                          <span className="text-muted-foreground text-xs block mb-1">Consistent contributors</span>
-                          <span className="font-medium text-foreground">{analytics.top_contributors.consistent_contributors.join(", ") || "N/A"}</span>
+                          <span className="text-muted-foreground text-xs block mb-2">Consistent contributors</span>
+                          <div className="flex flex-wrap gap-2">
+                            {analytics.top_contributors.consistent_contributors.length ? analytics.top_contributors.consistent_contributors.map((u) => (
+                              <a key={u} href={`https://github.com/${u}`} target="_blank" rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-border/50 text-foreground text-xs hover:bg-border transition-colors">
+                                {u}<ExternalLink className="w-2.5 h-2.5" />
+                              </a>
+                            )) : <span className="text-muted-foreground text-xs">N/A</span>}
+                          </div>
                         </div>
                       </CardContent>
                     </Card>
