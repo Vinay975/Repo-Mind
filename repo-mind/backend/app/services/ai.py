@@ -228,59 +228,99 @@ Constraints:
         include_visuals: bool,
     ) -> str:
         frameworks = ", ".join(tech_stack.get("frameworks", [])) or "Not detected"
-        libraries = ", ".join(tech_stack.get("detected_configs", [])[:8]) or "Not detected"
+        pkg_managers = ", ".join(tech_stack.get("package_managers", [])) or "Not detected"
+        configs = ", ".join(tech_stack.get("detected_configs", [])[:8]) or "Not detected"
+        topics = ", ".join(metadata.get("topics", [])) or "None"
+        tree = self._format_tree(file_structure)
 
         architecture_block = ""
         if include_visuals:
             architecture_block = """
-## Architecture Overview
+## 4. Technical Architecture
 ```mermaid
 graph TD
-  A[Repository Input] --> B[Repository Analysis]
-  B --> C[README Generation]
-  B --> D[Project Documentation]
-  B --> E[Contributor Insights]
-  C --> F[History and Versioning]
-  D --> F
-  E --> F
+  A[Source Repository] --> B[Static Analysis]
+  B --> C[Tech Stack Detection]
+  B --> D[File Structure Parsing]
+  C --> E[Documentation Generation]
+  D --> E
+  E --> F[Project Summary]
+  E --> G[README]
+  E --> H[Contributor Insights]
 ```
 """
+        else:
+            architecture_block = """
+## 4. Technical Architecture
+The repository follows a modular structure with clear separation between source code, configuration, and dependency management. Components interact through well-defined interfaces inferred from the detected frameworks and package managers.
+"""
 
-        return f"""# Project Overview Report: {repo_name}
+        return f"""# Project Summary: {repo_name}
 
-## 1. Project Overview
-### Problem Statement
-This repository addresses a software delivery or product need represented by its source code and module structure.
+## 1. Executive Summary
+{repo_description or 'No description provided.'} This document provides a comprehensive technical overview of the repository including architecture, technology stack, key features, and development guidance.
 
-### Objective
-Provide maintainable implementation and clear development workflows for contributors and maintainers.
+## 2. Problem Statement & Objectives
+- **Problem:** {repo_description or 'Addresses a software delivery or product need represented by its source code.'}
+- **Target users:** Developers, contributors, and maintainers of this repository.
+- **Primary goals:** Deliver maintainable, well-documented software with clear contribution workflows.
 
-## 2. Key Features
+## 3. Key Features & Capabilities
 - Core repository workflows inferred from source structure and build scripts.
 - Reusable components and module-level organization.
 - Collaboration support through issue and pull-request based iteration.
+- Dependency management via {pkg_managers}.
+- Framework-level abstractions provided by {frameworks}.
+- Configuration-driven setup using detected config files.
 
-### Business Value
-- Reduces onboarding time through clear technical organization.
-- Improves reliability through explicit tooling and dependency definitions.
-- Supports scalable contribution patterns.
+{architecture_block}
+## 5. Technology Stack
 
-## 3. Technical Stack
-- Languages: {self._top_languages(tech_stack)}
-- Frameworks: {frameworks}
-- Libraries/Tools: {libraries}
+| Category | Details |
+|---|---|
+| Languages | {self._top_languages(tech_stack)} |
+| Frameworks | {frameworks} |
+| Package Managers | {pkg_managers} |
+| Config Files | {configs} |
+| Topics | {topics} |
 
-{architecture_block}## 4. Development Summary
-- Repository size: {metadata.get('size', 0)} KB
-- Default branch: {metadata.get('default_branch', 'main')}
-- Open issues: {metadata.get('open_issues', 0)}
-- Active modules snapshot:
+## 6. Project Structure
 ```text
-{self._format_tree(file_structure)}
+{tree or 'Structure could not be resolved.'}
 ```
 
-## 5. Notes
-{repo_description or 'No repository description provided.'}
+## 7. Getting Started
+1. Clone the repository: `git clone https://github.com/{repo_name}.git`
+2. Install dependencies using the detected package manager: `{pkg_managers.split(',')[0].strip() if pkg_managers != 'Not detected' else 'see project docs'} install`
+3. Configure environment variables as required by the project.
+4. Start the application or run the primary entry point.
+
+## 8. Development Guide
+- Fork the repository and create a feature branch from `{metadata.get('default_branch', 'main')}`.
+- Follow existing code style and conventions.
+- Write or update tests for any changed functionality.
+- Open a pull request with a clear description of changes.
+
+## 9. Deployment & Environment
+- Default branch: `{metadata.get('default_branch', 'main')}`
+- Repository size: {metadata.get('size', 0)} KB
+- Review detected config files for CI/CD and environment setup: {configs}
+
+## 10. Repository Health & Metrics
+| Metric | Value |
+|---|---|
+| Stars | {metadata.get('stars', 0)} |
+| Forks | {metadata.get('forks', 0)} |
+| Open Issues | {metadata.get('open_issues', 0)} |
+| License | {metadata.get('license') or 'Not specified'} |
+| Size | {metadata.get('size', 0)} KB |
+
+## 11. Risks & Recommendations
+- **Documentation gap:** Ensure README and inline docs are kept up to date as the codebase evolves.
+- **Dependency management:** Regularly audit and update dependencies to address security vulnerabilities.
+- **Test coverage:** Verify adequate test coverage exists for critical modules.
+- **License clarity:** {f'License is specified as {metadata.get("license")} — ensure all dependencies are compatible.' if metadata.get('license') else 'No license detected — add a LICENSE file to clarify usage rights.'}
+- **Issue backlog:** {metadata.get('open_issues', 0)} open issues — triage and prioritize to maintain project health.
 """
 
     async def generate_project_documentation(
@@ -311,34 +351,72 @@ Provide maintainable implementation and clear development workflows for contribu
             "Generate structured markdown reports for software repositories."
         )
 
-        prompt = f"""Create a project overview report in markdown.
+        prompt = f"""Generate a detailed, professional Project Summary document in markdown for the following repository.
 
 Repository: {repo_name}
 Description: {repo_description or 'No description provided'}
-Stars: {metadata.get('stars', 0)}
-Forks: {metadata.get('forks', 0)}
-Default branch: {metadata.get('default_branch', 'main')}
-Open issues: {metadata.get('open_issues', 0)}
-Repository size (KB): {metadata.get('size', 0)}
+Stars: {metadata.get('stars', 0)} | Forks: {metadata.get('forks', 0)} | Open Issues: {metadata.get('open_issues', 0)}
+Default branch: {metadata.get('default_branch', 'main')} | Size: {metadata.get('size', 0)} KB
+License: {metadata.get('license') or 'Not specified'}
+Topics: {', '.join(metadata.get('topics', [])) or 'None'}
+Homepage: {metadata.get('homepage') or 'None'}
+Created: {metadata.get('created_at', 'Unknown')} | Last updated: {metadata.get('updated_at', 'Unknown')}
+
 Languages: {self._top_languages(tech_stack)}
 Frameworks: {', '.join(tech_stack.get('frameworks', [])) or 'Not detected'}
-Libraries/Tools indicators: {', '.join(tech_stack.get('detected_configs', [])) or 'Not detected'}
+Package managers: {', '.join(tech_stack.get('package_managers', [])) or 'Not detected'}
+Config files detected: {', '.join(tech_stack.get('detected_configs', [])) or 'None'}
 
 File structure snapshot:
 ```text
 {self._format_tree(file_structure)}
 ```
 
-Required sections:
-1. Project Overview (problem statement + objective)
-2. Key Features (core functionalities + business value)
-3. Technical Stack (languages, frameworks, libraries, tools)
-4. Architecture Overview ({'include high-level visual as mermaid' if include_visuals else 'textual overview only'})
-5. Development Summary (codebase size, active modules)
+Generate ALL of the following sections with substantial, detailed content — do not skip any:
+
+## 1. Executive Summary
+A 3-5 sentence high-level overview of what this project does, who it is for, and why it exists.
+
+## 2. Problem Statement & Objectives
+- What problem does this project solve?
+- Who are the target users or stakeholders?
+- What are the primary goals and success criteria?
+
+## 3. Key Features & Capabilities
+List and describe at least 6-8 core features inferred from the codebase structure, tech stack, and description. For each feature include a brief explanation of its value.
+
+## 4. Technical Architecture
+{'Include a Mermaid diagram showing the high-level system architecture, then follow with a textual explanation of each component and how they interact.' if include_visuals else 'Provide a detailed textual description of the system architecture — layers, components, data flow, and how modules interact.'}
+
+## 5. Technology Stack
+Organize into subsections: Languages, Frameworks & Libraries, Build Tools & Package Managers, Configuration & DevOps. For each technology explain why it is used and what role it plays.
+
+## 6. Project Structure
+Explain the folder/module organization. Describe the purpose of each top-level directory and key files.
+
+## 7. Getting Started
+Provide step-by-step setup instructions: prerequisites, installation, environment configuration, and running the project locally.
+
+## 8. Development Guide
+Cover: branching strategy, coding conventions, how to run tests, linting, and how to submit contributions.
+
+## 9. Deployment & Environment
+Describe deployment considerations, environment variables, build commands, and any CI/CD patterns visible from the config files.
+
+## 10. Repository Health & Metrics
+Summarize: stars, forks, open issues, codebase size, license, and what these metrics indicate about project maturity and community adoption.
+
+## 11. Risks & Recommendations
+Identify at least 3-5 potential technical risks, gaps, or improvement areas based on the codebase analysis. Provide actionable recommendations for each.
 
 {f'Additional instructions:{chr(10)}{custom_instructions}' if custom_instructions else ''}
 
-Return only markdown.
+Constraints:
+- Be detailed and specific — avoid generic filler text.
+- Use the actual repository data provided above.
+- Each section should have meaningful, substantive content.
+- Use tables, bullet lists, and code blocks where appropriate.
+- Return only markdown, no preamble.
 """
 
         try:

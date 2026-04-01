@@ -22,6 +22,7 @@ const TOOLS = [
     tagline: "Auto-generate beautiful READMEs",
     desc: "AI analyzes your code structure, tech stack, and purpose to craft a professional README instantly.",
     features: ["Project overview & badges","Setup & installation guide","Custom AI instructions","Full version history"],
+    tags: [{ label: "Preview", icon: "👁" }, { label: "Edit", icon: "✏️" }, { label: "Download .md", icon: "⬇️" }],
     icon: FileText,
     gradient: "from-violet-500/15 via-violet-500/5 to-transparent",
     border: "hover:border-violet-500/50",
@@ -39,6 +40,7 @@ const TOOLS = [
     tagline: "Rich project documentation",
     desc: "Generate comprehensive project summaries and license files, always in sync with your codebase.",
     features: ["Project summary docs","License generation","Visual diagram support","Markdown & PDF export"],
+    tags: [{ label: "Project Summary", icon: "📄" }, { label: "License", icon: "🛡️" }],
     icon: BookOpen,
     gradient: "from-indigo-500/15 via-indigo-500/5 to-transparent",
     border: "hover:border-indigo-500/50",
@@ -56,6 +58,7 @@ const TOOLS = [
     tagline: "Deep contributor analytics",
     desc: "Visualize contributor activity, commit distribution, and repository velocity over time.",
     features: ["Commit activity charts","Contributor breakdown","PR & issue stats","Rolling time horizons"],
+    tags: [{ label: "Area Chart", icon: "📈" }, { label: "Bar Chart", icon: "📊" }, { label: "Pie Chart", icon: "🥧" }, { label: "Radial Chart", icon: "🎯" }, { label: "PR Stats", icon: "🔀" }, { label: "Weekly Activity", icon: "📅" }],
     icon: BarChart2,
     gradient: "from-purple-500/15 via-purple-500/5 to-transparent",
     border: "hover:border-purple-500/50",
@@ -457,7 +460,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">{tool.desc}</p>
 
                 {/* Features */}
-                <ul className="space-y-2.5 mb-6 flex-1">
+                <ul className="space-y-2.5 mb-4 flex-1">
                   {tool.features.map((f) => (
                     <li key={f} className="flex items-center gap-2.5 text-xs text-muted-foreground">
                       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${tool.dot}`} />
@@ -465,6 +468,15 @@ export default function DashboardPage() {
                     </li>
                   ))}
                 </ul>
+
+                {/* Format / type chips */}
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {tool.tags.map((t) => (
+                    <span key={t.label} className={`inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full border border-border/60 bg-secondary/70 text-muted-foreground`}>
+                      <span>{t.icon}</span>{t.label}
+                    </span>
+                  ))}
+                </div>
 
                 {/* CTA */}
                 <Link href={tool.href}
