@@ -144,7 +144,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           )} */}
 
           {/* Past versions */}
-          {currentSession && (
+          {/* {currentSession && (
             <div>
               <p className="px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60 mb-1.5">Past Versions</p>
               <div className="space-y-0.5">
@@ -168,7 +168,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 )}
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </aside>
 
