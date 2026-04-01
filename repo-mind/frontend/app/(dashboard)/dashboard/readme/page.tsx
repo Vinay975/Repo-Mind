@@ -99,10 +99,10 @@ export default function ReadmePage() {
         <div className="flex items-center gap-2">
           {currentReadme && (
             <>
-              <Button variant="outline" size="sm" onClick={handleCopy}>
+              {/* <Button variant="outline" size="sm" onClick={handleCopy}>
                 {copied ? <Check className="w-3.5 h-3.5 mr-1.5" /> : <Copy className="w-3.5 h-3.5 mr-1.5" />}
                 {copied ? "Copied!" : "Copy"}
-              </Button>
+              </Button> */}
               <Button variant="outline" size="sm" onClick={handleDownload}>
                 <Download className="w-3.5 h-3.5 mr-1.5" /> Download
               </Button>
