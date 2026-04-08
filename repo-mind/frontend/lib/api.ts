@@ -236,6 +236,28 @@ class ApiClient {
   async healthCheck() {
     return this.request<{ status: string; database: string; ollama: string }>("/health");
   }
+
+  // Password reset
+  async forgotPassword(email: string) {
+    return this.request<{ message: string }>("/auth/forgot-password", {
+      method: "POST",
+      body: { email },
+    });
+  }
+
+  async verifyResetCode(email: string, code: string) {
+    return this.request<{ message: string }>("/auth/verify-reset-code", {
+      method: "POST",
+      body: { email, code },
+    });
+  }
+
+  async resetPassword(email: string, code: string, new_password: string) {
+    return this.request<{ message: string }>("/auth/reset-password", {
+      method: "POST",
+      body: { email, code, new_password },
+    });
+  }
 }
 
 export const api = new ApiClient();

@@ -13,6 +13,10 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Password-reset OTP
+    reset_code = Column(String(6), nullable=True)
+    reset_code_expires = Column(DateTime, nullable=True)
     
     # Relationships
     repo_sessions = relationship("RepoSession", back_populates="user", cascade="all, delete-orphan")

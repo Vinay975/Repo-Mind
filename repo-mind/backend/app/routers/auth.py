@@ -4,7 +4,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import timedelta
 
 from app.database import get_db
-from app.schemas.user import UserCreate, UserLogin, UserResponse, Token
+from app.schemas.user import (
+    UserCreate, UserLogin, UserResponse, Token,
+    ForgotPasswordRequest, VerifyResetCodeRequest, ResetPasswordRequest,
+)
 from app.services.auth import AuthService
 from app.config import settings
 
@@ -77,6 +80,41 @@ async def get_current_user(
 async def logout():
     """Logout user (client-side token removal)"""
     return {"message": "Successfully logged out"}
+
+
+@router.post("/forgot-password", status_code=status.HTTP_200_OK)
+async def forgot_password(
+    request: ForgotPasswordRequest,
+    db: AsyncSession = Depends(get_db),
+):
+    """Send a 6-digit reset code to the user's email."""
+    await AuthService.send_reset_code(db, request.email)
+    return {"message": "If that email is registered, a reset code has been sent."}
+
+
+@router.post("/verify-reset-code", status_code=status.HTTP_200_OK)
+async def verify_reset_code(
+    request: VerifyResetCodeRequest,
+    db: AsyncSession = Depends(get_db),
+):
+    """Verify that the OTP is valid (without resetting the password yet)."""
+    valid = await AuthService.verify_reset_code(db, request.email, request.code)
+    if not valid:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or expired reset code.",
+        )
+    return {"message": "Code verified."}
+
+
+@router.post("/reset-password", status_code=status.HTTP_200_OK)
+async def reset_password(
+    request: ResetPasswordRequest,
+    db: AsyncSession = Depends(get_db),
+):
+    """Reset the password after verifying the OTP."""
+    await AuthService.reset_password(db, request.email, request.code, request.new_password)
+    return {"message": "Password reset successfully."}
 
 # Dependency to get current user
 async def get_current_active_user(

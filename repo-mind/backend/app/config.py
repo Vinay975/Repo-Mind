@@ -22,7 +22,17 @@ class Settings(BaseSettings):
     
     # GitHub API (no auth needed for public repos)
     GITHUB_API_BASE: str = "https://api.github.com"
-    
+
+    # Email / SMTP settings for password reset
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USER: str = ""          # set in .env  e.g. yourapp@gmail.com
+    SMTP_PASSWORD: str = ""      # set in .env  (Gmail App Password)
+    SMTP_FROM_NAME: str = "RepoMind"
+
+    # Reset code TTL in minutes
+    RESET_CODE_EXPIRE_MINUTES: int = 15
+
     class Config:
         env_file = ".env"
         case_sensitive = True
