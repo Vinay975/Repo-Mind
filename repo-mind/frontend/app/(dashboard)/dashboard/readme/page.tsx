@@ -13,7 +13,10 @@ import { useRepoStore, useReadmeStore } from "@/lib/store";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/lib/api";
 import { formatRelativeTime } from "@/lib/utils";
-import { FileText, Loader2, Download, Save, RefreshCw, Eye, Edit3, Clock, Sparkles, Copy, Check, History } from "lucide-react";
+import { FileText, Loader2, Download, Save, RefreshCw, Eye, Edit3, Clock, Sparkles, Copy, Check, History, Github } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function ReadmePage() {
   const router = useRouter();
@@ -26,6 +29,37 @@ export default function ReadmePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [copied, setCopied] = useState(false);
   const [customInstructions, setCustomInstructions] = useState("");
+  const [showPushModal, setShowPushModal] = useState(false);
+  const [githubToken, setGithubToken] = useState("");
+  const [pushBranch, setPushBranch] = useState("");
+  const [commitMessage, setCommitMessage] = useState("");
+  const [isPushing, setIsPushing] = useState(false);
+
+  const handlePushToGitHub = async () => {
+    if (!currentReadme || !githubToken.trim()) return;
+    setIsPushing(true);
+    try {
+      const result = await api.pushContent({
+        content_id: currentReadme.id,
+        github_token: githubToken.trim(),
+        branch: pushBranch.trim() || undefined,
+        commit_message: commitMessage.trim() || undefined,
+      });
+      toast({
+        title: "Pushed to GitHub!",
+        description: result.commit_url ? `View commit` : `README.md updated on ${result.branch}`,
+        variant: "success",
+      });
+      setShowPushModal(false);
+      setGithubToken("");
+      setPushBranch("");
+      setCommitMessage("");
+    } catch (error) {
+      toast({ title: "Push failed", description: error instanceof Error ? error.message : "Could not push", variant: "destructive" });
+    } finally {
+      setIsPushing(false);
+    }
+  };
 
   useEffect(() => {
     if (!hasHydrated) return;
@@ -105,6 +139,9 @@ export default function ReadmePage() {
               </Button> */}
               <Button variant="outline" size="sm" onClick={handleDownload}>
                 <Download className="w-3.5 h-3.5 mr-1.5" /> Download
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => setShowPushModal(true)}>
+                <Github className="w-3.5 h-3.5 mr-1.5" /> Push to GitHub
               </Button>
             </>
           )}
@@ -222,6 +259,56 @@ export default function ReadmePage() {
           </Card>
         </div>
       </div>
+      <Dialog open={showPushModal} onOpenChange={setShowPushModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Github className="w-4 h-4" /> Push README to GitHub
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="github-token">GitHub Personal Access Token <span className="text-destructive">*</span></Label>
+              <Input
+                id="github-token"
+                type="password"
+                placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+                value={githubToken}
+                onChange={(e) => setGithubToken(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">Needs <code>repo</code> scope. Token is not stored.</p>
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="push-branch">Branch <span className="text-muted-foreground text-xs">(optional)</span></Label>
+              <Input
+                id="push-branch"
+                placeholder="main"
+                value={pushBranch}
+                onChange={(e) => setPushBranch(e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="commit-message">Commit Message <span className="text-muted-foreground text-xs">(optional)</span></Label>
+              <Input
+                id="commit-message"
+                placeholder="chore: update README.md via RepoMind"
+                value={commitMessage}
+                onChange={(e) => setCommitMessage(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowPushModal(false)} disabled={isPushing}>Cancel</Button>
+            <Button
+              onClick={handlePushToGitHub}
+              disabled={isPushing || !githubToken.trim()}
+              className="bg-violet-500 hover:bg-violet-600 text-white"
+            >
+              {isPushing ? <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />Pushing...</> : <><Github className="w-3.5 h-3.5 mr-1.5" />Push</>}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
